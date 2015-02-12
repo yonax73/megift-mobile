@@ -4,7 +4,8 @@
     <title>Megift App Sign up</title>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <link rel="stylesheet" type="text/css" href="https://rawgit.com/yonaxTics/inventor-js/master/app/assets/less/megift/megift.min.css"> 
+    <link rel="stylesheet" type="text/css" href="https://rawgit.com/yonaxTics/inventor-js/master/app/assets/less/megift/megift.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"> 
     
 
     <!-- IMPORTANT: Do not include your weinre script tag as part of your release builds! -->
@@ -53,25 +54,26 @@
         </div>
         <div class="row">
         	<div class="col-sm-12">
-				<form class="form-horizontal">
-				  <div class="form-group">				    
+				<form id="signup-form" class="form-horizontal">
+				  <div class="form-group has-success has-feedback">				    
 				    <div class="col-sm-10">
-				      <input type="text" class="form-control"  placeholder="Nombre Completo">
+				      <input type="text" class="form-control" name="user-name" data-name="true"  placeholder="Nombre Completo">
+					  <span class="fa fa-check form-control-feedback"></span>					  
 				    </div>
 				  </div>
-				  <div class="form-group">				    
+				  <div class="form-group has-success has-feedback">				    
 				    <div class="col-sm-10">
-				      <input type="email" class="form-control" placeholder="Correo Electronico">
+				      <input type="email" class="form-control" name="user-email" data-email="true" placeholder="Correo Electronico">
 				    </div>
 				  </div>
-				  <div class="form-group">				    
+				  <div class="form-group has-success has-feedback">				    
 				    <div class="col-sm-10">
-				      <input type="password" class="form-control" placeholder="Contraseña">
+				      <input type="password" class="form-control" name="user-password" data-password="true" placeholder="Contraseña">
 				    </div>
 				  </div>
-				  <div class="form-group">				    
+				  <div class="form-group has-success has-feedback">				    
 				    <div class="col-sm-10">
-				      <input type="password" class="form-control" placeholder="Confirmar Contraseña">
+				      <input type="password" class="form-control" name="user-confirm-password" data-equals-to="user-password" placeholder="Confirmar Contraseña">
 				    </div>
 				  </div>
 				  <div class="form-group">				    
