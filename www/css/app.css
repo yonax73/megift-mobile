@@ -1,0 +1,12 @@
+.bg{
+	margin: 0;
+	padding: 0;
+	background-color: #ffb772;
+	border: none;
+}
+.logo-center{
+    display: table;
+    margin: 0 auto;
+    padding-top: 5px;
+}
+
