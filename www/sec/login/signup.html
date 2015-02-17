@@ -4,95 +4,97 @@
     <title>Megift App Sign up</title>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <link rel="stylesheet" type="text/css" href="https://rawgit.com/yonaxTics/inventor-js/master/app/assets/less/megift/megift.min.css">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="https://rawgit.com/yonaxTics/inventor-js/master/public/stylesheets/inventor/megift/megift.min.css">
+
 </head>
 <body>
-	<nav class="navbar navbar-default">
-	  <div class="container-fluid">
-	    <div class="navbar-header">
-	      <span class="navbar-brand ">
-	        <img src="../../../icon.png">
-	      </span>
-           <p class="navbar-text">Crea tu perfil de regalo.</p>
-	    </div>
-	  </div>
-	</nav>
-	<section class="container-fluid">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <span class="navbar-brand ">
+                    <img src="../../../icon.png">
+                </span>
+                <p class="navbar-text">Crea tu perfil de regalo.</p>
+            </div>
+        </div>
+    </nav>
+    <section class="container-fluid">
         <div class="row">
-          <div class="col-sm-12">
-          	 <p>Por favor completa la siguiente informaci&oacute;n para crear tu perfil.</p>
-          </div>	 
+            <div class="col-sm-12">
+                <p>Por favor completa la siguiente informaci&oacute;n para crear tu perfil.</p>
+            </div>
         </div>
         <div class="row">
-        	<div class="col-sm-12">
-				<form id="signup-form" class="form-horizontal">
-				  <div class="form-group has-feedback">				    
-				    <div class="col-sm-10">
-				      <input type="text" class="form-control input-lg" name="user-name" data-name="true"  placeholder="Nombre Completo">
-					  <span class="fa fa-check form-control-feedback"></span>	
-					  <small class="i-form-error-msg text-danger hidden">El nombre es requerido!</small>				  
-				    </div>
-				  </div>
-				  <div class="form-group has-feedback">				    
-				    <div class="col-sm-10">
-				      <input type="email" class="form-control input-lg" name="user-email" data-email="true" placeholder="Correo Electronico">
-					  <span class="fa fa-check form-control-feedback"></span>	
-					  <small class="i-form-error-msg text-danger hidden">El email es requerido!</small>
-				    </div>
-				  </div>
-				  <div class="form-group has-feedback">				    
-				    <div class="col-sm-10">
-				      <input type="password" class="form-control input-lg" name="user-password" data-password="true" placeholder="Contraseña">
-					  <span class="fa fa-check form-control-feedback"></span>	
-					  <small class="i-form-error-msg text-danger hidden">La contrase&ntilde;a es requerida!</small>
-				    </div>
-				  </div>
-				  <div class="form-group has-feedback">				    
-				    <div class="col-sm-10">
-				      <input type="password" class="form-control input-lg" name="user-confirm-password" data-equals-to="user-password" placeholder="Confirmar Contraseña">
-					  <span class="fa fa-check form-control-feedback"></span>	
-					  <small class="i-form-error-msg text-danger hidden">La contrase&ntilde;a no coincide!</small>
-				    </div>
-				  </div>
-				  <div class="form-group">				    
-				    <div class="col-sm-10">
-				      <h6>Al hacer clic en continuar aceptas las
-				       <a href="termsAndConditions.html" rel="external">condiciones</a>
-				       y que has le&iacute;do las 
-				       <a href="privacyPolicy.html" rel="external">pol&iacute;ticas de privacidad</a>
-				     </h6>
-				    </div>
-				  </div>
-				  <div class="form-group">
-				    <div class="col-sm-offset-2 col-sm-10">
-				      <button type="submit" class="btn btn-success btn-lg btn-block">Continuar</button>
-				    </div>
-				  </div>
-				</form>
-				<a href="login.html" rel="external">Ya tengo una cuenta.! Ingresa aqu&iacute;.</a>
-        	</div>
+            <div class="col-sm-12">
+                <form id="signup-form" class="form-horizontal">
+                    <div class="form-group has-feedback">
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control input-lg" name="user-name" data-name="true" placeholder="Nombre Completo">
+                            <span class="form-control-feedback"></span>
+                            <small class="i-form-error-msg text-danger hidden">El nombre es requerido!</small>
+                        </div>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <div class="col-sm-10">
+                            <input type="email" class="form-control input-lg" name="user-email" data-email="true" placeholder="Correo Electrónico">
+                            <span class="form-control-feedback"></span>
+                            <small class="i-form-error-msg text-danger hidden">El correo es requerido!</small>
+                        </div>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control input-lg" name="user-password" data-required="true" placeholder="Contraseña">
+                            <span class="form-control-feedback"></span>
+                            <small class="i-form-error-msg text-danger hidden">La contrase&ntilde;a es requerida!</small>
+                        </div>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control input-lg" data-required="true" data-equalsto="user-password" placeholder="Confirmar Contraseña">
+                            <span class="form-control-feedback"></span>
+                            <small class="i-form-error-msg text-danger hidden">La contrase&ntilde;a no coincide!</small>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-10">
+                            <h6>
+                                Al hacer clic en continuar aceptas las
+                                <a href="termsAndConditions.html" rel="external">condiciones</a>
+                                y que has le&iacute;do las
+                                <a href="privacyPolicy.html" rel="external">pol&iacute;ticas de privacidad</a>
+                            </h6>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-success btn-lg btn-block">Continuar</button>
+                        </div>
+                    </div>
+                </form>
+                <a href="login.html" rel="external">Ya tengo una cuenta.! Ingresa aqu&iacute;.</a>
+            </div>
         </div>
-	</section>
-	<script src="intelxdk.js"></script>        
-    <script src="cordova.js"></script>          
-    <script src="xhr.js"></script>  
-    <script src="https://rawgit.com/yonaxTics/inventor-js/master/app/assets/ts/inventor-js/inventor-js/Inventor.min.js"></script>
-    <script src="https://rawgit.com/yonaxTics/inventor-js/master/app/assets/ts/inventor-js/inventor-js/InventorMobile.min.js"></script>  	
+    </section>
+    <script src="intelxdk.js"></script>
+    <script src="cordova.js"></script>
+    <script src="xhr.js"></script>
+    <script src="https://rawgit.com/yonaxTics/inventor-js/master/public/javascripts/inventor-js/Inventor.min.js"></script>
+    <script src="https://rawgit.com/yonaxTics/inventor-js/master/public/javascripts/inventor-js/InventorMobile.min.js"></script>
     <script>
-        function onDeviceReady() { 
+        function onDeviceReady() {
         }
-        document.addEventListener("deviceready", onDeviceReady, false) ;
+        document.addEventListener("deviceready", onDeviceReady, false);
 
-       var form = new Form(document.getElementById('signup-form'));
-       form.onsubmit(function(){
-       	 if(form.isValid()){
-           alert('is valid');
-       	 }else{
-            alert('is not valid'); 
-       	 }
-       });
+        var form = new Form(document.getElementById('signup-form'));
+        form.onsubmit(function () {
+            if (form.isValid()) {
+                alert('is valid');
+            } else {
+                alert('is not valid');
+            }
+        });
 
     </script>
-</body> 
+</body>
 </html>
