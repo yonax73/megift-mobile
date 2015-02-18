@@ -1,58 +1,60 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <title>Megift App</title>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <link rel="stylesheet" type="text/css" href="https://rawgit.com/yonaxTics/inventor-js/master/app/assets/less/megift/megift.min.css"> 
-    <link rel="stylesheet" type="text/css" href="css/app.css">   
+    <link rel="stylesheet" type="text/css" href="https://rawgit.com/yonaxTics/inventor-js/master/public/stylesheets/inventor/megift/megift.min.css">
+    <link rel="stylesheet" type="text/css" href="css/app.css">
     <style type="text/css">
-        .welcome{   
+        .welcome {
             color: #fff;
         }
-        .start-session{
-             padding-top: 15px;
-             padding-bottom: 10px;
+
+        .start-session {
+            padding-top: 15px;
+            padding-bottom: 10px;
         }
-        .start-session a{
-             margin-top: 5px;
-        }
+
+            .start-session a {
+                margin-top: 5px;
+            }
     </style>
 </head>
 <body class="bg">
     <section class="container-fluid">
-       <div class="row">
-         <div class="col-sm-12">
-             <img class="logo-center" src="../www/images/logo121x57.png"> 
-         </div>
-       </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <img class="logo-center" src="../www/images/logo121x57.png">
+            </div>
+        </div>
     </section>
-    <script src="intelxdk.js"></script>        
-    <script src="cordova.js"></script>         
+    <script src="intelxdk.js"></script>
+    <script src="cordova.js"></script>
     <script src="xhr.js"></script>
     <script>
         function onDeviceReady() {
-            if( navigator.splashscreen && navigator.splashscreen.hide ) { 
-                navigator.splashscreen.hide() ;
+            if (navigator.splashscreen && navigator.splashscreen.hide) {
+                navigator.splashscreen.hide();
             }
-            if( window.intel && intel.xdk && intel.xdk.device ) {          
-                if( intel.xdk.device.hideSplashScreen )                
-                    intel.xdk.device.hideSplashScreen() ;
+            if (window.intel && intel.xdk && intel.xdk.device) {
+                if (intel.xdk.device.hideSplashScreen)
+                    intel.xdk.device.hideSplashScreen();
             }
             startApp();
         }
-        function startApp(){
-           var userId = window.localStorage.getItem("user-id");
-           var userIsRegister = window.localStorage.getItem("user-is-register");
-           if(userId!=null && userId > 0){
-              
-           }else if(userIsRegister != null && userIsRegister > 0){
-              window.location="sec/login/login.html";
-           }else{
-              window.location="sec/login/signup.html";
-           }
+        function startApp() {
+            var userId = window.localStorage.getItem("user-id");
+            var userIsRegister = window.localStorage.getItem("user-is-register");
+            if (userId != null && userId > 0) {
+
+            } else if (userIsRegister != null && userIsRegister > 0) {
+                window.location = "sec/login/login.html";
+            } else {
+                window.location = "sec/login/signup.html";
+            }
         }
-        document.addEventListener("deviceready", onDeviceReady, false) ;
+        document.addEventListener("deviceready", onDeviceReady, false);
     </script>
 </body>
 </html>

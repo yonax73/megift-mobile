@@ -1,0 +1,122 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Megift App Invite friends</title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://rawgit.com/yonaxTics/inventor-js/master/public/stylesheets/inventor/megift/megift.min.css">
+    <link rel="stylesheet" type="text/css" href="../../css/app.css">
+    <style>
+        .circle {
+            text-align: center;
+        }
+
+            .circle a {
+                border-radius: 60px;
+                color: #fff;
+                display: inline-block;
+                font-size: 16px;
+                height: 65px;
+                margin-right: 10%;
+                margin-top: 5px;
+                padding-top: 20px;
+                text-align: center;
+                width: 65px;
+            }
+
+                .circle a:hover {
+                    color: #fff;
+                }
+
+                .circle a.gmail {
+                    background-color: #eb4646;
+                }
+
+                .circle a.outlook {
+                    background-color: #0072c6;
+                }
+
+                .circle a.yahoo {
+                    background-color: #500095;
+                }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <span class="navbar-brand ">
+                    <img src="../../../icon.png">
+                </span>
+                <p class="navbar-text">Invitar amigos.</p>
+            </div>
+        </div>
+    </nav>
+    <section class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <h3>Cuentale a dos amigos</h3>
+                <form id="invite-friends-form" class="form-horizontal">
+                    <div class="form-group has-feedback">
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control input-lg" name="friend-a-name" data-email="true" placeholder="Correo Electrónico">
+                            <span class="form-control-feedback"></span>
+                            <small class="i-form-error-msg text-danger hidden">Ingrese un correo electrónico válido</small>
+                        </div>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control input-lg" name="friend-b-name" data-email="true" placeholder="Correo Electrónico">
+                            <span class="form-control-feedback"></span>
+                            <small class="i-form-error-msg text-danger hidden">Ingrese un correo electrónico válido</small>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-success btn-lg btn-block">Enviar mensaje</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <h4>Ó cuentale a tus amigos de:</h4>
+                <div class="circle">
+                    <a class="gmail" href="oAuth?id=google">Gmail</a>
+                    <a class="outlook" href="oAuth?id=hotmail">Outlook</a>
+                    <a class="yahoo" href="oAuth?id=yahoo">Yahoo</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="i-popup-mask hidden"></div>
+    <div id="success-popup" class="i-popup-panel i-popup-primary hidden">
+        <h5>
+            El mensaje ha sido enviado.<br /><br />
+            Gracias por darnos la oportunidad de hacer a tus amigos felices.
+        </h5>
+        <br />
+        <button class="btn btn-primary btn-lg btn-block">Buscar regalos</button>
+    </div>
+    <script src="intelxdk.js"></script>
+    <script src="cordova.js"></script>
+    <script src="xhr.js"></script>
+    <script src="https://rawgit.com/yonaxTics/inventor-js/master/public/javascripts/inventor-js/Inventor.min.js"></script>
+    <script src="https://rawgit.com/yonaxTics/inventor-js/master/public/javascripts/inventor-js/InventorMobile.min.js"></script>
+    <script>
+        function onDeviceReady() {
+        }
+        document.addEventListener("deviceready", onDeviceReady, false);
+        var inviteFriendsForm = new Form(document.getElementById('invite-friends-form'));
+        var successPopup = new Popup(document.getElementById('success-popup'));
+        inviteFriendsForm.onsubmit(function () {
+            if (inviteFriendsForm.isValid()) {
+                successPopup.show();
+            }
+        });
+
+    </script>
+</body>
+</html>
