@@ -18,7 +18,7 @@
        </div>
         <div class="row">
         	<div class="col-sm-12">
-				<form class="form-horizontal">
+				<form id="login-form" class="form-horizontal">
 				  <div class="form-group">				    
 				    <div class="col-sm-10">
 				      <input type="email" class="form-control input-lg" data-email="true" placeholder="Correo Electronico">
@@ -56,12 +56,10 @@
         }
         document.addEventListener("deviceready", onDeviceReady, false);
 
-        var form = new Form(document.getElementById('signup-form'));
+        var form = new Form(document.getElementById('login-form'));
         form.onsubmit(function () {
-            if (form.isValid()) {
-                alert('is valid');
-            } else {
-                alert('is not valid');
+            if (form.isValid()) {               
+                window.location ='../../user/user.html';
             }
         });
     </script>

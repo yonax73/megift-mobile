@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Megift App User</title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="https://rawgit.com/yonaxTics/inventor-js/master/public/stylesheets/inventor/megift/megift.min.css">
+    <style>
+        .image-user {
+            display: table;
+            margin: 0 auto;
+            max-height: 150px;
+            max-width: 180px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <span class="navbar-brand ">
+                    <img src="../../../icon.png">
+                </span>
+                <p class="navbar-text">Mi perfil</p>
+            </div>
+        </div>
+    </nav>
+    <section class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <ul class="list-group text-center">
+                    <li class="list-group-item">
+                        <img src="../images/user/unknown-user.gif" class="image-user" />
+                    </li>
+                    <li class="list-group-item" id="name-user">
+                        <strong>Andrea Correa Mantilla</strong><br />
+                        <span id="gender-user">Mujer</span>
+                    </li>
+                    <li class="list-group-item" id="birthday-user">22 Abril de 1986</li>
+                    <li class="list-group-item" id="city-user">Medellin,<span id="couuntry-user">Colombia</span></li>
+                    <li class="list-group-item" id="email-user">lauracm@gmail.com</li>
+                </ul>
+                <a href="user-update.html" rel="external" class="btn btn-success btn-lg btn-block">Editar</a>
+            </div>
+        </div>
+
+    </section>
+    <script src="intelxdk.js"></script>
+    <script src="cordova.js"></script>
+    <script src="xhr.js"></script>
+    <script src="https://rawgit.com/yonaxTics/inventor-js/master/public/javascripts/inventor-js/Inventor.min.js"></script>
+    <script src="https://rawgit.com/yonaxTics/inventor-js/master/public/javascripts/inventor-js/InventorMobile.min.js"></script>
+    <script>
+        function onDeviceReady() {
+        }
+        document.addEventListener("deviceready", onDeviceReady, false);
+    </script>
+</body>
+</html>
