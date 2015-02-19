@@ -33,6 +33,9 @@
     <script src="cordova.js"></script>
     <script src="xhr.js"></script>
     <script>
+        var localHost = 'http://localhost:9000';
+        var productionHost = 'http://megift.co';
+        var host = localHost;
         function onDeviceReady() {
             if (navigator.splashscreen && navigator.splashscreen.hide) {
                 navigator.splashscreen.hide();
@@ -43,7 +46,12 @@
             }
             startApp();
         }
+        // for local work in web broswers 
+        if (host === localHost) {
+            startApp();
+        }
         function startApp() {
+            window.localStorage.setItem('host',host);
             var userId = window.localStorage.getItem("user-id");
             var userIsRegister = window.localStorage.getItem("user-is-register");
             if (userId != null && userId > 0) {
