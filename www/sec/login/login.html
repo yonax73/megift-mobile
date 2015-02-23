@@ -90,7 +90,8 @@
                 }, function (xhr) {
                     beforeSendPopup.close();
                     var response = xhr.responseText;
-                    if (response === successResponse) {
+                    if (response > 0) {
+                        window.localStorage.setItem('id-login',response);
                         window.location = '../../bsp/partner/partner.html';
                     } else {
                         document.getElementById('general-error-msg').textContent = response;

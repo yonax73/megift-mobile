@@ -30,7 +30,7 @@
             <div class="col-sm-12">
                 <ul class="list-group text-center">
                     <li class="list-group-item">
-                        <img src="../../images/unknown-user.gif" class="image-partner" />
+                        <img src="../../images/unknown-user.png" class="image-partner" />
                     </li>
                     <li class="list-group-item" id="name-partner">
                         <strong>Andrea Correa Mantilla</strong><br />
@@ -54,6 +54,19 @@
         function onDeviceReady() {
         }
         document.addEventListener("deviceready", onDeviceReady, false);
+        //atributes
+        var successResponse = "OK";
+        var host = window.localStorage.getItem('host');
+        var idLogin = window.localStorage.getItem('id-login');
+        //atributes user
+        var namePartner = document.getElementById('name-partner');
+        var namePartner = document.getElementById('name-partner');
+        var namePartner = document.getElementById('name-partner');
+        var namePartner = document.getElementById('name-partner');
+        var namePartner = document.getElementById('name-partner');
+        XHR.byPost('id-login=' + idLogin, host + '/loadPartner', null, function (xhr) {
+            
+        })
 
     </script>
 </body>
