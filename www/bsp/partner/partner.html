@@ -30,15 +30,15 @@
             <div class="col-sm-12">
                 <ul class="list-group text-center">
                     <li class="list-group-item">
-                        <img src="../../images/unknown-user.png" class="image-partner" />
+                        <img src="../../images/unknown-user.png" class="image-partner" id="image-partner" />
                     </li>
-                    <li class="list-group-item" id="name-partner">
-                        <strong>Andrea Correa Mantilla</strong><br />
-                        <span id="gender-partner">Mujer</span>
+                    <li class="list-group-item" >
+                        <strong id="name-partner"></strong><br />
+                        <span id="gender-partner"></span>
                     </li>
-                    <li class="list-group-item" id="birthday-partner">22 Abril de 1986</li>
-                    <li class="list-group-item" id="city-partner">Medellin,<span id="couuntry-partner">Colombia</span></li>
-                    <li class="list-group-item" id="email-partner">lauracm@gmail.com</li>
+                    <li class="list-group-item" id="birthday-partner"></li>
+                    <li class="list-group-item" id="city-partner"><span id="couuntry-partner"></span></li>
+                    <li class="list-group-item" id="email-partner"></li>
                 </ul>
                 <a href="partner-update.html" rel="external" class="btn btn-success btn-lg btn-block">Editar</a>
             </div>
@@ -58,15 +58,27 @@
         var successResponse = "OK";
         var host = window.localStorage.getItem('host');
         var idLogin = window.localStorage.getItem('id-login');
+        var FEMALE = 1;
+        var MALE = 2;
         //atributes user
+        var imagePartner = document.getElementById('image-partner');
         var namePartner = document.getElementById('name-partner');
-        var namePartner = document.getElementById('name-partner');
-        var namePartner = document.getElementById('name-partner');
-        var namePartner = document.getElementById('name-partner');
-        var namePartner = document.getElementById('name-partner');
+        var genderPartner = document.getElementById('gender-partner');
+        var birthdayPartner = document.getElementById('birthday-partner');
+        var cityPartner = document.getElementById('city-partner');
+        var emailPartner = document.getElementById('email-partner');
         XHR.byPost('id-login=' + idLogin, host + '/loadPartner', null, function (xhr) {
-            
-        })
+            var partner = JSON.parse(xhr.responseText);
+            window.localStorage.setItem('partner', JSON.stringify(partner));
+            namePartner.textContent = partner.fullName;            
+            genderPartner.textContent = partner.gender.id === FEMALE ? 'Mujer' : partner.gender.id === MALE ? 'Hombre' : '';
+            birthdayPartner.textContent = partner.birthday === null ? '' : partner.birthday;
+            cityPartner.textContent = partner.location.address === null ? '' : partner.location.address.city.city;
+            emailPartner.textContent = partner.login.email;
+            if (partner.picture.id >0) {
+                imagePartner.src = partner.picture.dataURI;
+            }
+        });
 
     </script>
 </body>
