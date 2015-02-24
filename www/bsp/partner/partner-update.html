@@ -10,12 +10,15 @@
         .image-partner {
             display: table;
             margin: 0 auto;
-            max-height: 150px;
-            max-width: 180px;
+            max-height: 128px;
+            max-width: 128px;
         }
         .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
             background-color: #fff;
             cursor: text;
+        }
+        #picture-upload{
+            list-style:none;
         }
     </style>
 </head>
@@ -38,11 +41,15 @@
                         <div class="col-sm-10">
                             <ul class="list-group text-center">
                                 <li class="list-group-item">
-                                    <img src="../../images/unknown-user.png" class="image-partner" id="image-partner" />
+                                    <img src="../../images/unknown-user.png" class="image-partner img-circle" id="image-partner" />
+                                </li>
+                                <li id="picture-upload">
+                                    <a class="list-group-item" href="#"><i class="fa fa-camera fa-fw"></i>&nbsp; Cambiar foto</a>
                                 </li>
                             </ul>
                         </div>
                     </div>
+                    <input type="file" accept="image/*" id="picture-select" name="picture" class="hidden" />
                 </form>
                 <form id="partner-form" class="form-horizontal">
                     <div class="form-group has-feedback">
@@ -50,13 +57,6 @@
                             <input type="text" class="form-control input-lg" id="name-partner" name="name-partner" data-name="true" placeholder="Nombre Completo">
                             <span class="form-control-feedback"></span>
                             <small class="i-form-error-msg text-danger hidden">El nombre es requerido!</small>
-                        </div>
-                    </div>
-                    <div class="form-group has-feedback">
-                        <div class="col-sm-10">
-                            <input type="email" class="form-control input-lg" id="email-partner" name="email-partner" data-email="true" placeholder="Correo Electrónico">
-                            <span class="form-control-feedback"></span>
-                            <small class="i-form-error-msg text-danger hidden">El correo es requerido!</small>
                         </div>
                     </div>
                     <div class="form-group has-feedback">
@@ -70,13 +70,13 @@
                         <div class="form-group i-radio-horizontal">
                             <span class="i-radio i-radio-toolbar  i-radio-left i-radio-toolbar-default">
                                 <label class="i-radio-toolbar-label">Soy:</label>
-                            </span>       
+                            </span>
                             <span class="i-radio i-radio-toolbar i-radio-left i-radio-toolbar-default">
-                                <input type="radio" value="default"  name="gender-partner" id="female-gender-partner" checked="checked">
+                                <input type="radio" value="1" name="gender-partner" id="female-gender-partner" checked="checked">
                                 <label for="female-gender-partner">Mujer</label>
                             </span>
                             <span class="i-radio i-radio-toolbar i-radio-left i-radio-toolbar-default">
-                                <input type="radio" value="primary" name="gender-partner" id="male-gender-partner">
+                                <input type="radio" value="2" name="gender-partner" id="male-gender-partner">
                                 <label for="male-gender-partner">Hombre</label>
                             </span>
                         </div>
@@ -89,10 +89,8 @@
                         </div>
                     </div>
                     <input type="hidden" id="id-partner" name="id-partner" />
-                    <input type="hidden" id="id-login" name="id-login" />
                     <input type="hidden" id="id-location" name="id-location" />
                     <input type="hidden" id="id-city" name="id-city" />
-                    <input type="hidden" id="id-gender" name="id-gender" />
                     <div class="col-sm-10 form-group">
                         <button type="submit" class="btn btn-success btn-lg btn-block">Guardar</button>
                     </div>
@@ -127,6 +125,23 @@
             </div>
         </form>
     </div>
+    <div id="before-send-popup" class="i-popup-panel i-popup-primary hidden text-primary text-center">
+        <h4><i class="fa fa-spinner fa-pulse fa-5x"></i></h4>
+        <h5>Enviando, por favor espera...</h5>
+    </div>
+    <div id="error-popup" class="i-popup-panel i-popup-danger hidden text-justify">
+        <p>Lo siento, ha ocurrido un error(<span id="error-msg"></span>), intentalo nuevamente!</p>
+        <p>Si el error persiste puedes contactarnos a <span class="text-danger"><strong>soporte@megift.co</strong></span></p>
+        <button class="btn btn-danger btn-lg btn-block i-popup-close">Aceptar</button>
+    </div>
+    <div id="general-error-popup" class="i-popup-panel i-popup-danger hidden text-justify">
+        <p id="general-error-msg"></p>
+        <button class="btn btn-danger btn-lg btn-block i-popup-close">Aceptar</button>
+    </div>
+    <div id="success-popup" class="i-popup-panel i-popup-success hidden text-justify">
+        <h4 id="success-msg"></h4>
+        <button class="btn btn-success btn-lg btn-block i-popup-close">Aceptar</button>
+    </div>
     <script src="intelxdk.js"></script>
     <script src="cordova.js"></script>
     <script src="xhr.js"></script>
@@ -140,18 +155,21 @@
         //atributtes
         var successResponse = "OK";
         var host = window.localStorage.getItem('host');
-        var idLogin = window.localStorage.getItem('id-login');
         var FEMALE = 1;
         var MALE = 2;
-        //atributter popup and form
+        //atributtes popup
         var birthdayPopup = new Popup(document.getElementById('birthday-popup'));
+        var beforeSendPopup = new Popup(document.getElementById('before-send-popup'));
+        var errorPopup = new Popup(document.getElementById('error-popup'));
+        var successPopup = new Popup(document.getElementById('success-popup'));
+        var generalErrorPopup = new Popup(document.getElementById('general-error-popup'));
+        //atributtes form
         var birthdayForm = new Form(document.getElementById('birthday-form'));
         var partnerForm = new Form(document.getElementById('partner-form'));
         var photoForm = new Form(document.getElementById('photo-form'));
         //atributes partner
         var imagePartner = document.getElementById('image-partner');
         var namePartner = document.getElementById('name-partner');
-        var emailPartner = document.getElementById('email-partner');
         var cityPartner = document.getElementById('city-partner');
         var birthdayPartner = document.getElementById('birthday-partner');
         var femaleGenderPartner = document.getElementById('female-gender-partner');
@@ -160,23 +178,20 @@
         var idLogin = document.getElementById('id-login');
         var idLocation = document.getElementById('id-location');
         var idCity = document.getElementById('id-city');
-        var idGender = document.getElementById('id-gender');
         var partner = JSON.parse(window.localStorage.getItem('partner'));
         //fill partner
         idPartner.value = partner.id;
-        idLogin.value = partner.login.id;
         idLocation.value = partner.location.id;
         idCity.value = partner.location.address === null ? 0 : partner.location.address.city.id;
-        idGender.value = partner.gender.id;
-        namePartner.value = partner.fullName;     
+        namePartner.value = partner.fullName;
         if (partner.gender.id === MALE) {
-            maleGenderPartner.checked;
+            maleGenderPartner.checked = true;
         } else if (partner.gender.id === FEMALE) {
-            femaleGenderPartner.checked;
+            femaleGenderPartner.checked = true;
         }
-        birthdayPartner.value = partner.birthday === null ? '' : partner.birthday;
+        birthdayPartner.value = partner.birthday === null ? '' : partner.formatBirthday;
         cityPartner.value = partner.location.address === null ? '' : partner.location.address.city.city;
-        emailPartner.value = partner.login.email;
+
         if (partner.picture.id > 0) {
             imagePartner.src = partner.picture.dataURI;
         }
@@ -194,7 +209,23 @@
         //partner form
         partnerForm.onsubmit(function () {
             if (partnerForm.isValid()) {
-
+                XHR.byPost(partnerForm.serialize(), host + '/updatePartner', function () {
+                    beforeSendPopup.show();
+                }, function (xhr) {
+                    beforeSendPopup.close();
+                    var response = xhr.responseText;
+                    if (response === successResponse) {
+                        document.getElementById('success-msg').textContent = 'El perfil se guardo correctamente!';
+                        successPopup.show();
+                    } else {
+                        document.getElementById('general-error-msg').textContent = response;
+                        generalErrorPopup.show();
+                    }
+                }, function (xhr) {
+                    beforeSendPopup.close();
+                    document.getElementById('error-msg').textContent = xhr.statusText;
+                    errorPopup.show();
+                });
             }
         });
         //photo form
@@ -207,6 +238,64 @@
         birthdayPartner.onclick = function () {
             birthdayPopup.show();
             document.getElementsByName('day-birthday')[0].focus();
+        }
+        //upload image
+        document.getElementById('picture-upload').onclick = function () {
+            document.getElementById('picture-select').click();
+        }
+        document.getElementById('image-partner').onclick = function (e) {
+            document.getElementById('picture-select').click();
+        }
+        //trigger event picture upload
+        document.getElementById('picture-select').onchange = function (e) {
+            handlePictureSelect(e);
+        }
+        document.getElementById('image-partner').onchange = function (e) {
+        }
+        function handlePictureSelect(e) {
+            var picture = e.target.files[0];
+            if (picture.type.match('image.*')) {
+                if (picture.size <= 65535) {
+                    var formData = new FormData();
+                    formData.append('picture', picture);
+                    formData.append('id-picture', partner.picture.id);
+                    formData.append('id-partner', partner.id);
+                    var uploadPictureXHR = new XHR('POST', host + '/uploadpicture');
+                    uploadPictureXHR.onBeforeSend(function () {
+                        beforeSendPopup.show();
+                    });
+                    uploadPictureXHR.onReady(function (xhr) {
+                        beforeSendPopup.close();
+                        var response = xhr.responseText;
+                        if (response === successResponse) {
+                            var reader = new FileReader();
+                            reader.onload = (function (theFile) {
+                                return function (evt) {
+                                    document.getElementById('image-partner').src = evt.target.result;
+                                };
+                            })(picture);
+                            reader.readAsDataURL(picture);
+                            document.getElementById('success-msg').textContent = 'La foto se guardo correctamente!';
+                            successPopup.show();
+                        } else {
+                            document.getElementById('general-error-msg').textContent = response;
+                            generalErrorPopup.show();
+                        }
+                    });
+                    uploadPictureXHR.onError(function (xhr) {
+                        beforeSendPopup.close();
+                        document.getElementById('error-msg').textContent = xhr.statusText;
+                        errorPopup.show();
+                    });
+                    uploadPictureXHR.send(formData);
+                } else {
+                    document.getElementById('general-error-msg').textContent = 'La imagen no puede ser mayor que 64KB';
+                    generalErrorPopup.show();
+                }
+            } else {
+                document.getElementById('general-error-msg').textContent = 'Seleccione una imagen válida';
+                generalErrorPopup.show();
+            }
         }
     </script>
 </body>

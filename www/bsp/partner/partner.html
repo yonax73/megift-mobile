@@ -9,8 +9,8 @@
         .image-partner {
             display: table;
             margin: 0 auto;
-            max-height: 150px;
-            max-width: 180px;
+            max-height: 128px;
+            max-width: 128px;
         }
     </style>
 </head>
@@ -30,9 +30,9 @@
             <div class="col-sm-12">
                 <ul class="list-group text-center">
                     <li class="list-group-item">
-                        <img src="../../images/unknown-user.png" class="image-partner" id="image-partner" />
+                        <img src="../../images/unknown-user.png" class="image-partner img-circle" id="image-partner" />
                     </li>
-                    <li class="list-group-item" >
+                    <li class="list-group-item">
                         <strong id="name-partner"></strong><br />
                         <span id="gender-partner"></span>
                     </li>
@@ -70,12 +70,12 @@
         XHR.byPost('id-login=' + idLogin, host + '/loadPartner', null, function (xhr) {
             var partner = JSON.parse(xhr.responseText);
             window.localStorage.setItem('partner', JSON.stringify(partner));
-            namePartner.textContent = partner.fullName;            
+            namePartner.textContent = partner.fullName;
             genderPartner.textContent = partner.gender.id === FEMALE ? 'Mujer' : partner.gender.id === MALE ? 'Hombre' : '';
-            birthdayPartner.textContent = partner.birthday === null ? '' : partner.birthday;
+            birthdayPartner.textContent = partner.birthday === null ? '' : partner.formatBirthday;
             cityPartner.textContent = partner.location.address === null ? '' : partner.location.address.city.city;
             emailPartner.textContent = partner.login.email;
-            if (partner.picture.id >0) {
+            if (partner.picture.id > 0) {
                 imagePartner.src = partner.picture.dataURI;
             }
         });
