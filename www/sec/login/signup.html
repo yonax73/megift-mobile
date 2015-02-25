@@ -30,14 +30,14 @@
                 <form id="signup-form" class="form-horizontal">
                     <div class="form-group has-feedback">
                         <div class="col-sm-10">
-                            <input type="text" class="form-control input-lg" name="name-partner" data-name="true" placeholder="Nombre Completo">
+                            <input type="text" class="form-control input-lg" id="name-partner" name="name-partner" data-name="true" placeholder="Nombre Completo">
                             <span class="form-control-feedback"></span>
                             <small class="i-form-error-msg text-danger hidden">El nombre es requerido!</small>
                         </div>
                     </div>
                     <div class="form-group has-feedback">
                         <div class="col-sm-10">
-                            <input type="email" class="form-control input-lg" name="email-partner" data-email="true" placeholder="Correo Electrónico">
+                            <input type="email" class="form-control input-lg" id="email-partner" name="email-partner" data-email="true" placeholder="Correo Electrónico">
                             <span class="form-control-feedback"></span>
                             <small class="i-form-error-msg text-danger hidden">El correo es requerido!</small>
                         </div>
@@ -122,6 +122,10 @@
                     beforeSendPopup.close();                  
                     var response = xhr.responseText;
                     if (response === successResponse) {
+                        var partner = {};
+                        partner.name = document.getElementById('name-partner').value;
+                        partner.email = document.getElementById('email-partner').value;
+                        window.localStorage.setItem('partner', JSON.stringify(partner));
                         successPopup.show();
                     } else {
                         document.getElementById('general-error-msg').textContent = response;

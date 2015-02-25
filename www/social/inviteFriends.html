@@ -11,6 +11,7 @@
         .circle {
             text-align: center;
         }
+
             .circle a {
                 border-radius: 60px;
                 color: #fff;
@@ -23,15 +24,19 @@
                 text-align: center;
                 width: 65px;
             }
+
                 .circle a:hover {
                     color: #fff;
                 }
+
                 .circle a.gmail {
                     background-color: #eb4646;
                 }
+
                 .circle a.outlook {
                     background-color: #0072c6;
                 }
+
                 .circle a.yahoo {
                     background-color: #500095;
                 }
@@ -55,18 +60,20 @@
                 <form id="invite-friends-form" class="form-horizontal">
                     <div class="form-group has-feedback">
                         <div class="col-sm-10">
-                            <input type="text" class="form-control input-lg" name="friend-a-name" data-email="true" placeholder="Correo Electrónico">
+                            <input type="text" class="form-control input-lg" name="email-friend-1" data-email="true" placeholder="Correo Electrónico">
                             <span class="form-control-feedback"></span>
                             <small class="i-form-error-msg text-danger hidden">Ingrese un correo electrónico válido</small>
                         </div>
                     </div>
                     <div class="form-group has-feedback">
                         <div class="col-sm-10">
-                            <input type="text" class="form-control input-lg" name="friend-b-name" data-email="true" placeholder="Correo Electrónico">
+                            <input type="text" class="form-control input-lg" name="email-friend-2" data-email="true" placeholder="Correo Electrónico">
                             <span class="form-control-feedback"></span>
                             <small class="i-form-error-msg text-danger hidden">Ingrese un correo electrónico válido</small>
                         </div>
                     </div>
+                    <input type="hidden" name="name-partner" id="name-partner" />
+                    <input type="hidden" name="email-partner" id="email-partner" />
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
                             <button type="submit" class="btn btn-success btn-lg btn-block">Enviar mensaje</button>
@@ -93,7 +100,20 @@
             Gracias por darnos la oportunidad de hacer a tus amigos felices.
         </h5>
         <br />
-        <button class="btn btn-primary btn-lg btn-block">Buscar regalos</button>
+        <a href="../gift/search-gift.html" rel="external" class="btn btn-primary btn-lg btn-block">Buscar regalos</a>
+    </div>
+    <div id="before-send-popup" class="i-popup-panel i-popup-primary hidden text-primary text-center">
+        <h4><i class="fa fa-spinner fa-pulse fa-5x"></i></h4>
+        <h5>Enviando, por favor espera...</h5>
+    </div>
+    <div id="error-popup" class="i-popup-panel i-popup-danger hidden text-justify">
+        <p>Lo siento, ha ocurrido un error(<span id="error-msg"></span>), intentalo nuevamente!</p>
+        <p>Si el error persiste puedes contactarnos a <span class="text-danger"><strong>soporte@megift.co</strong></span></p>
+        <button class="btn btn-danger btn-lg btn-block i-popup-close">Aceptar</button>
+    </div>
+    <div id="general-error-popup" class="i-popup-panel i-popup-danger hidden text-justify">
+        <p id="general-error-msg"></p>
+        <button class="btn btn-danger btn-lg btn-block i-popup-close">Aceptar</button>
     </div>
     <script src="intelxdk.js"></script>
     <script src="cordova.js"></script>
@@ -104,11 +124,41 @@
         function onDeviceReady() {
         }
         document.addEventListener("deviceready", onDeviceReady, false);
+        //atributes
         var inviteFriendsForm = new Form(document.getElementById('invite-friends-form'));
-        var successPopup = new Popup(document.getElementById('success-popup'));
+        var successPopup = new Popup(document.getElementById('success-popup'));      
+        var beforeSendPopup = new Popup(document.getElementById('before-send-popup'));
+        var errorPopup = new Popup(document.getElementById('error-popup'));       
+        var generalErrorPopup = new Popup(document.getElementById('general-error-popup'));
+        var host = window.localStorage.getItem('host');
+        var successResponse = "OK";
+        //invite friends
         inviteFriendsForm.onsubmit(function () {
             if (inviteFriendsForm.isValid()) {
-                successPopup.show();
+                var partner = JSON.parse(window.localStorage.getItem('partner'));
+                document.getElementById('name-partner').value = partner.name;
+                document.getElementById('email-partner').value = partner.email;
+                var inviteFriendsXHR = new XHR('POST', host + '/inviteFriends');
+                inviteFriendsXHR.setContentType('application/x-www-form-urlencoded;charset=UTF-8');
+                inviteFriendsXHR.onBeforeSend(function () {
+                    beforeSendPopup.show();
+                });
+                inviteFriendsXHR.onReady(function (xhr) {
+                    beforeSendPopup.close();
+                    var response = xhr.responseText;
+                    if (response === successResponse) {
+                        successPopup.show();
+                    } else {
+                        document.getElementById('general-error-msg').textContent = response;
+                        generalErrorPopup.show();
+                    }
+                });
+                inviteFriendsXHR.onError(function (xhr) {
+                    beforeSendPopup.close();
+                    document.getElementById('error-msg').textContent = xhr.statusText;
+                    errorPopup.show();
+                });
+                inviteFriendsXHR.send(inviteFriendsForm.serialize());
             }
         });
 
