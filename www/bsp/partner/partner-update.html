@@ -209,7 +209,7 @@
         //partner form
         partnerForm.onsubmit(function () {
             if (partnerForm.isValid()) {
-                XHR.byPost(partnerForm.serialize(), host + '/updatePartner', function () {
+                XHR.byPost(partnerForm.serialize(), host + '/uploadpicturePartner', function () {
                     beforeSendPopup.show();
                 }, function (xhr) {
                     beforeSendPopup.close();
