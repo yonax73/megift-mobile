@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" href="../../css/app.css">
     
 </head>
-<body class="bg">
+<body class="bg i-ease-in i-1s i-fade-in">
     <section class="container-fluid">
         <div class="row">
             <div class="col-sm-12">
@@ -42,7 +42,7 @@
                             </span>
                         </div>
                     </div>
-                     <input type="hidden" name="business-type" value="3">
+                    <input type="hidden" name="business-type" value="3">
                     <div class="col-sm-10 form-group">
                         <button type="submit" class="btn btn-success btn-lg btn-block">Ingresar</button>
                     </div>
@@ -92,8 +92,10 @@
                     beforeSendPopup.close();
                     var response = xhr.responseText;
                     if (response > 0) {
-                        window.localStorage.setItem('id-login',response);
+                        window.localStorage.setItem('id-login', response);
+                       // window.location = '../../gift/search-gift.html';
                         window.location = '../../bsp/partner/partner.html';
+                       
                     } else {
                         document.getElementById('general-error-msg').textContent = response;
                         generalErrorPopup.show();

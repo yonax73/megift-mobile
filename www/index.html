@@ -33,36 +33,37 @@
     <script src="cordova.js"></script>
     <script src="xhr.js"></script>
     <script>
-        var localHost = 'http://localhost:9000';
-        var productionHost = 'http://megift.co';
-        var host = localHost;
-        function onDeviceReady() {
-            if (navigator.splashscreen && navigator.splashscreen.hide) {
-                navigator.splashscreen.hide();
-            }
-            if (window.intel && intel.xdk && intel.xdk.device) {
-                if (intel.xdk.device.hideSplashScreen)
-                    intel.xdk.device.hideSplashScreen();
-            }
-            startApp();
+    var localHost = 'http://localhost:9000';
+    var productionHost = 'http://megift.co';
+    var host = localHost;
+    function onDeviceReady() {
+        if (navigator.splashscreen && navigator.splashscreen.hide) {
+            navigator.splashscreen.hide();
         }
-        // for local work in web broswers 
-        if (host === localHost) {
-            startApp();
+        if (window.intel && intel.xdk && intel.xdk.device) {
+            if (intel.xdk.device.hideSplashScreen)
+                intel.xdk.device.hideSplashScreen();
         }
-        function startApp() {
-            window.localStorage.setItem('host',host);
-            var userId = window.localStorage.getItem("user-id");
-            var userIsRegister = window.localStorage.getItem("user-is-register");
-            if (userId != null && userId > 0) {
+        startApp();
+    }
+    // for local work in web broswers
+    if (host === localHost) {
+        startApp();
+    }
+    function startApp() {
+        window.localStorage.setItem('host',host);
+        var userId = window.localStorage.getItem("user-id");
+        var userIsRegister = window.localStorage.getItem("user-is-register");
+        if (userId != null && userId > 0) {
 
-            } else if (userIsRegister != null && userIsRegister > 0) {
-                window.location = "sec/login/login.html";
-            } else {
-                window.location = "sec/login/signup.html";
-            }
+        } else if (userIsRegister != null && userIsRegister > 0) {
+            window.location = "sec/login/login.html";
+        } else {
+            window.location = "sec/login/signup.html";
+            //window.location = "gift/search-gift.html";
         }
-        document.addEventListener("deviceready", onDeviceReady, false);
+    }
+    document.addEventListener("deviceready", onDeviceReady, false);
     </script>
 </body>
 </html>

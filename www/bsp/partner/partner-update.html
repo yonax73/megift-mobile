@@ -209,7 +209,7 @@
         //partner form
         partnerForm.onsubmit(function () {
             if (partnerForm.isValid()) {
-                XHR.byPost(partnerForm.serialize(), host + '/uploadpicturePartner', function () {
+                XHR.byPost(partnerForm.serialize(), host + '/updatePartner', function () {
                     beforeSendPopup.show();
                 }, function (xhr) {
                     beforeSendPopup.close();
@@ -260,7 +260,7 @@
                     formData.append('picture', picture);
                     formData.append('id-picture', partner.picture.id);
                     formData.append('id-partner', partner.id);
-                    var uploadPictureXHR = new XHR('POST', host + '/uploadpicture');
+                    var uploadPictureXHR = new XHR('POST', host + '/uploadpicturePartner');
                     uploadPictureXHR.onBeforeSend(function () {
                         beforeSendPopup.show();
                     });
