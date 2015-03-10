@@ -1,0 +1,171 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Megift App Gift Search</title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://rawgit.com/yonaxTics/inventor-js/master/public/stylesheets/inventor/megift/megift.min.css">
+</head>
+
+<body class="bg i-ease-in i-1s i-fade-in">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <span class="navbar-brand ">
+                    <img src="../../icon.png" alt="Megift" />
+                </span>
+                <p class="navbar-text">Regalos para disfrutar</p>
+            </div>
+        </div>
+    </nav>
+    <section class="container-fluid">
+        <div id="cover-gift" class="row text-center">
+           
+        </div>
+    </section>
+    <div class="i-popup-mask hidden"></div>
+    <div id="before-send-popup" class="i-popup-panel i-popup-primary hidden text-primary text-center">
+        <h4><i class="fa fa-spinner fa-pulse fa-5x"></i></h4>
+        <h5>Enviando, por favor espera...</h5>
+    </div>
+    <div id="error-popup" class="i-popup-panel i-popup-danger hidden text-justify">
+        <p>Lo siento, ha ocurrido un error(<span id="error-msg"></span>), intentalo nuevamente!</p>
+        <p>Si el error persiste puedes contactarnos a <span class="text-danger"><strong>soporte@megift.co</strong></span></p>
+        <button class="btn btn-danger btn-lg btn-block i-popup-close">Aceptar</button>
+    </div>
+    <div id="general-error-popup" class="i-popup-panel i-popup-danger hidden text-justify">
+        <p id="general-error-msg"></p>
+        <button class="btn btn-danger btn-lg btn-block i-popup-close">Aceptar</button>
+    </div>
+
+    <script src="intelxdk.js"></script>
+    <script src="cordova.js"></script>
+    <script src="xhr.js"></script>
+    <script src="https://rawgit.com/yonaxTics/inventor-js/master/public/javascripts/inventor-js/Inventor.min.js"></script>
+    <script src="https://rawgit.com/yonaxTics/inventor-js/master/public/javascripts/inventor-js/InventorMobile.min.js"></script>
+    <script>
+        function onDeviceReady() {
+
+        }
+        document.addEventListener("deviceready", onDeviceReady, false);
+        var successResponse = "OK";
+        var host = window.localStorage.getItem('host');
+        var idLogin = window.localStorage.getItem('id-login');
+        var posList = JSON.parse(window.localStorage.getItem('POS-list'));
+        var form = new Form(document.getElementById('gift-search-form'));
+        var beforeSendPopup = new Popup(document.getElementById('before-send-popup'));
+        var errorPopup = new Popup(document.getElementById('error-popup'));
+        var generalErrorPopup = new Popup(document.getElementById('general-error-popup'));
+        var giftSearchMsg = document.getElementById('git-search-msg');
+        var giftSearchBtn = document.getElementById('gift-search-btn');
+
+        function loadGifts() {
+            var element = document.getElementById('cover-gift');
+            var n = posList.length;
+            for (var i = 0; i < n; i++) {
+                var pos = posList[i];
+                var x = pos.giftList;
+                for (var j = 0; j < x; j++) {
+                    coverGift()
+                }
+            }
+
+        }
+
+        // Cover Gifts
+        function coverGift(element, gift) {
+            var n = gift.length;
+            for (var i = 0; i < n; i++) {
+                var g = gift[i];
+                //col
+                var col = document.createElement('div');
+                col.classList.add('col-lg-2');
+                col.classList.add('col-md-4');
+                col.classList.add('col-sm-6');
+                col.classList.add('cover-col');
+                //content
+                var content = document.createElement('div');
+                content.classList.add('cover-content');
+                //header
+                var header = document.createElement('div');
+                header.classList.add('cover-header');
+                //img  
+                var img = document.createElement('img');
+                var src = null;
+                if (g.pictures != null) {
+                    var m = g.pictures.length;
+                    if (m > 0) {
+                        var j = 0;
+                        var found = false;
+                        do {
+                            var pic = g.pictures[j];
+                            if (pic.main) {
+                                src = pic.dataURI;
+                                found = true;
+                            }
+                            j++;
+                        } while (!found || j < m);
+                    }
+                }
+                if (src == null) {
+                   // src = '@routes.Assets.at("images/gift/gift.png")';
+                }
+                img.src = src;
+                header.appendChild(img);
+                //title
+                var title = document.createElement('p');
+                title.textContent = g.name;
+                header.appendChild(title);
+                //body
+                var body = document.createElement('div');
+                body.classList.add('cover-body');
+                //ul
+                var ul = document.createElement('ul');
+                //icon
+                var icon = document.createElement('i');
+                icon.className = ' fa fa-money';
+                //li
+                var li = document.createElement('li');
+                li.appendChild(icon);
+                li.appendChild(document.createTextNode(g.price));
+                ul.appendChild(li);
+                //icon
+                icon = document.createElement('i');
+                icon.className = ' fa fa-clock-o';
+                //li
+                li = document.createElement('li');
+                li.appendChild(icon);
+                li.appendChild(document.createTextNode(g.expirationTime));
+                ul.appendChild(li);
+                //icon 
+                icon = document.createElement('i');
+                icon.className = ' fa fa-paperclip';
+                //li
+                li = document.createElement('li');
+                li.appendChild(icon);
+                li.appendChild(document.createTextNode(g.status.value1));
+                ul.appendChild(li);
+                body.appendChild(ul);
+                //footer
+                var footer = document.createElement('div');
+                footer.classList.add('cover-footer');
+                var a = document.createElement('a');
+                a.href = '/gift';
+                a.textContent = 'Administrar';
+                a.dataset.id = g.id;
+                a.onclick = function () {
+                    sessionStorage.setItem('type-gift-view', this.dataset.id);
+                }
+                footer.appendChild(a);
+                //appends
+                content.appendChild(header);
+                content.appendChild(body);
+                content.appendChild(footer);
+                col.appendChild(content);
+                element.appendChild(col);
+            };
+        }
+    </script>
+</body>
+</html>

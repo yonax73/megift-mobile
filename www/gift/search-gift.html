@@ -120,28 +120,25 @@
            
                 var giftSearchXHR = new XHR('POST', host + '/searchGift');
                 giftSearchXHR.setContentType('application/x-www-form-urlencoded;charset=UTF-8');
-                giftSearchXHR.onBeforeSend(function () {
-                    giftSearchMsg.textContent = 'Buscando más regalos..';
-
-                });
                 giftSearchXHR.onReady(function (xhr) {
                     giftSearchMsg.textContent = 'Toca la caja para buscar los regalos que tenemos para ti.';
                     giftSearchBtn.disabled = false;
                     giftSearchBtn.classList.remove('btn-gift-search-disabled');
                     try {
-                        //si no hay regalos mostrar un mensaje que diga que no hay regalos en este momenteo
-                        //guardar el resultado en localstorage
-                        //redirecionar a lista de regalos
-                        alert(xhr.responseText);
-                        console.log(xhr.responseText);
+                        var posList = JSON.parse(xhr.responseText);
+                        if (posList.length < 1) {
+                            giftSearchMsg.textContent = 'No hay regalos cerca a tu ubicación';
+                        } else {
+                            window.localStorage.setItem('POS-list', xhr.responseText);
+                            window.location = 'gift-list.html';
+                        }                        
                     } catch (ex) {
                         console.log(ex);
                         document.getElementById('general-error-msg').textContent = response;
                         generalErrorPopup.show();
                     }
                 });
-                giftSearchXHR.onError(function () {
-                    beforeSendPopup.close();
+                giftSearchXHR.onError(function () {                   
                     document.getElementById('error-msg').textContent = xhr.statusText;
                     errorPopup.show();
                 });
@@ -155,33 +152,8 @@
         function onError(error) {
             alert('code: ' + error.code + '\n' +
                   'message: ' + error.message + '\n');
-        }
-
-        function calculateDistance() {
-            alert(calcCrow(6.2799032, -75.5574848, 6.23317, -75.60418).toFixed(1));
-
-
-
-            //This function takes in latitude and longitude of two location and returns the distance between them as the crow flies (in km)
-            function calcCrow(lat1, lon1, lat2, lon2) {
-                var R = 6371; // km
-                var dLat = toRad(lat2 - lat1);
-                var dLon = toRad(lon2 - lon1);
-                var lat1 = toRad(lat1);
-                var lat2 = toRad(lat2);
-
-                var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-                  Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
-                var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-                var d = R * c;
-                return d;
-            }
-
-            // Converts numeric degrees to radians
-            function toRad(Value) {
-                return Value * Math.PI / 180;
-            }
-        }
+        }    
+        
     </script>
 </body>
 </html>
