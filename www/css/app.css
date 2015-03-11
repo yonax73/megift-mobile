@@ -1,12 +1,90 @@
-.bg{
-	margin: 0;
-	padding: 0;
-	background-color: #FEECD4;
-	border: none;
+.bg {
+    margin: 0;
+    padding: 0;
+    background-color: #FEECD4;
+    border: none;
 }
-.logo-center{
+
+.logo-center {
     display: table;
     margin: 0 auto;
     padding-top: 5px;
 }
 
+/*COVER BLOCK*/
+.cover-content {
+    border: 1px dashed rgb(210, 210, 210);
+    font-size: 12px;
+    margin: 0 auto;
+    max-width: 100%;
+    min-width: 100%;
+    text-align: left;
+    width: 100%;
+}
+
+    .cover-content i {
+        padding-right: 0.5em;
+    }
+
+.cover-col {
+    padding: 0.3em;
+}
+
+.cover-header {
+    background-color: #fff;
+    border-bottom: 1px dashed rgb(210, 210, 210);
+    font-weight: bold;
+    height: 130px;
+    max-height: 130px;
+    max-width: 100%;
+    min-height: 130px;
+    min-width: 100%;
+    position: relative;
+    width: 100%;
+}
+
+.cover-title {
+    background-color: rgba(0, 0, 0, 0.6);
+    bottom: 0;
+    color: #e4e4e4;
+    margin: 0;
+    padding: 1em 0.5em;
+    position: absolute;
+    width: 100%;
+}
+
+    .cover-title > span {
+        font-size: 10px;
+    }
+
+    .cover-title > p {
+        margin: 0;
+    }
+
+.cover-header img {
+    height: 100%;
+    width: 100%;
+}
+
+.cover-body {
+    padding: 0.5em;
+    background-color: rgb(255, 255, 255);
+}
+
+    .cover-body ul {
+        list-style: outside none none;
+        margin: 0;
+        padding: 0.2em;
+    }
+
+        .cover-body ul li {
+            color: #333;
+            display: inline;
+            padding-right: 1em;
+        }
+
+.cover-footer {
+    border-top: 1px solid rgb(210, 210, 210);
+    background-color: #f6f6f6;
+    padding: 0.5em;
+}

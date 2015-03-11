@@ -1,14 +1,15 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title>Megift App Gift Search</title>
+    <title>Megift App Gifts</title>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/app.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="https://rawgit.com/yonaxTics/inventor-js/master/public/stylesheets/inventor/megift/megift.min.css">
 </head>
 
-<body class="bg i-ease-in i-1s i-fade-in">
+<body class="i-ease-in i-1s i-fade-in">
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -21,7 +22,7 @@
     </nav>
     <section class="container-fluid">
         <div id="cover-gift" class="row text-center">
-           
+
         </div>
     </section>
     <div class="i-popup-mask hidden"></div>
@@ -49,38 +50,34 @@
 
         }
         document.addEventListener("deviceready", onDeviceReady, false);
+
         var successResponse = "OK";
         var host = window.localStorage.getItem('host');
         var idLogin = window.localStorage.getItem('id-login');
         var posList = JSON.parse(window.localStorage.getItem('POS-list'));
-        var form = new Form(document.getElementById('gift-search-form'));
         var beforeSendPopup = new Popup(document.getElementById('before-send-popup'));
         var errorPopup = new Popup(document.getElementById('error-popup'));
         var generalErrorPopup = new Popup(document.getElementById('general-error-popup'));
-        var giftSearchMsg = document.getElementById('git-search-msg');
-        var giftSearchBtn = document.getElementById('gift-search-btn');
+
+        loadGifts();
 
         function loadGifts() {
             var element = document.getElementById('cover-gift');
             var n = posList.length;
             for (var i = 0; i < n; i++) {
                 var pos = posList[i];
-                var x = pos.giftList;
-                for (var j = 0; j < x; j++) {
-                    coverGift()
-                }
+                coverGift(element, pos.giftList, pos.name, pos.distanceInMetersStr);
             }
-
         }
 
         // Cover Gifts
-        function coverGift(element, gift) {
+        function coverGift(element, gift, posName, posDistance) {
             var n = gift.length;
             for (var i = 0; i < n; i++) {
                 var g = gift[i];
                 //col
                 var col = document.createElement('div');
-                col.classList.add('col-lg-2');
+                col.classList.add('col-lg-4');
                 col.classList.add('col-md-4');
                 col.classList.add('col-sm-6');
                 col.classList.add('cover-col');
@@ -90,7 +87,7 @@
                 //header
                 var header = document.createElement('div');
                 header.classList.add('cover-header');
-                //img  
+                //img
                 var img = document.createElement('img');
                 var src = null;
                 if (g.pictures != null) {
@@ -109,13 +106,24 @@
                     }
                 }
                 if (src == null) {
-                   // src = '@routes.Assets.at("images/gift/gift.png")';
+                    src = '/www/images/gift.png';
                 }
                 img.src = src;
                 header.appendChild(img);
                 //title
-                var title = document.createElement('p');
-                title.textContent = g.name;
+                var title = document.createElement('div');
+                title.classList.add('cover-title');
+                var p = document.createElement('p');
+                p.appendChild(document.createTextNode(g.name));
+                title.appendChild(p);
+                //icon subtitle
+                var iconSubTitle = document.createElement('i');
+                iconSubTitle.className = 'text-danger fa fa-map-marker';
+                //subtitle
+                var subTitle = document.createElement('span');
+                subTitle.appendChild(iconSubTitle);
+                subTitle.appendChild(document.createTextNode(posName));
+                title.appendChild(subTitle);
                 header.appendChild(title);
                 //body
                 var body = document.createElement('div');
@@ -138,30 +146,20 @@
                 li.appendChild(icon);
                 li.appendChild(document.createTextNode(g.expirationTime));
                 ul.appendChild(li);
-                //icon 
+                //icon
                 icon = document.createElement('i');
-                icon.className = ' fa fa-paperclip';
+                icon.className = 'fa fa-car';
                 //li
                 li = document.createElement('li');
                 li.appendChild(icon);
-                li.appendChild(document.createTextNode(g.status.value1));
+                li.appendChild(document.createTextNode(posDistance));
+                // li.appendChild(document.createTextNode(g.status.value1));
                 ul.appendChild(li);
                 body.appendChild(ul);
-                //footer
-                var footer = document.createElement('div');
-                footer.classList.add('cover-footer');
-                var a = document.createElement('a');
-                a.href = '/gift';
-                a.textContent = 'Administrar';
-                a.dataset.id = g.id;
-                a.onclick = function () {
-                    sessionStorage.setItem('type-gift-view', this.dataset.id);
-                }
-                footer.appendChild(a);
+
                 //appends
                 content.appendChild(header);
                 content.appendChild(body);
-                content.appendChild(footer);
                 col.appendChild(content);
                 element.appendChild(col);
             };

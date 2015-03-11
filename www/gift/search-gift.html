@@ -134,7 +134,7 @@
                         }                        
                     } catch (ex) {
                         console.log(ex);
-                        document.getElementById('general-error-msg').textContent = response;
+                        document.getElementById('general-error-msg').textContent = xhr.responseText;
                         generalErrorPopup.show();
                     }
                 });

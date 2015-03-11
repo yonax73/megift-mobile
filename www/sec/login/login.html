@@ -94,8 +94,7 @@
                     if (response > 0) {
                         window.localStorage.setItem('id-login', response);
                         window.location = '../../gift/search-gift.html';
-                        //window.location = '../../bsp/partner/partner.html';
-                       
+                        //window.location = '../../bsp/partner/partner.html';                       
                     } else {
                         document.getElementById('general-error-msg').textContent = response;
                         generalErrorPopup.show();
