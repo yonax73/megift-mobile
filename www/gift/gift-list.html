@@ -58,6 +58,8 @@
         var beforeSendPopup = new Popup(document.getElementById('before-send-popup'));
         var errorPopup = new Popup(document.getElementById('error-popup'));
         var generalErrorPopup = new Popup(document.getElementById('general-error-popup'));
+        //clean local storage
+        window.localStorage.removeItem('POS-list')
 
         loadGifts();
 
@@ -66,12 +68,12 @@
             var n = posList.length;
             for (var i = 0; i < n; i++) {
                 var pos = posList[i];
-                coverGift(element, pos.giftList, pos.name, pos.distanceInMetersStr);
+                coverGift(element, pos.giftList, pos.name, pos.distanceInMetersStr,pos.id);
             }
         }
 
         // Cover Gifts
-        function coverGift(element, gift, posName, posDistance) {
+        function coverGift(element, gift, posName, posDistance,posId) {
             var n = gift.length;
             for (var i = 0; i < n; i++) {
                 var g = gift[i];
@@ -110,6 +112,14 @@
                 }
                 img.src = src;
                 header.appendChild(img);
+                header.dataset.posId = posId;
+                header.dataset.giftId =g.id;
+                //event header
+                header.onclick = function () {
+                    window.localStorage.setItem('pos-id', this.dataset.posId);
+                    window.localStorage.setItem('gift-id', this.dataset.giftId);
+                    window.location = 'gift.html';                    
+                }
                 //title
                 var title = document.createElement('div');
                 title.classList.add('cover-title');

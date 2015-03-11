@@ -1,0 +1,158 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Megift App Gifts Info</title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/app.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="https://rawgit.com/yonaxTics/inventor-js/master/public/stylesheets/inventor/megift/megift.min.css">
+</head>
+
+<body class="i-ease-in i-1s i-fade-in">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <span class="navbar-brand ">
+                    <img src="../../icon.png" alt="Megift" />
+                </span>
+                <p class="navbar-text">Información de tú regalo</p>
+            </div>
+        </div>
+    </nav>
+    <section class="container-fluid">
+        <div class="row text-justify">
+            <div class="col-lg-4 col-md-4 col-sm-6 detail-gift">
+                <ul class="list-group">
+                    <li id="gift-name" class="list-group-item">
+                        Nombre Del regalo
+                    </li>
+                </ul>
+                <ul class="list-group">
+                    <li id="gift-picture" class="list-group-item content-img">
+                        <img src="/www/images/gift.png">
+                    </li>
+                </ul>
+                <ul class="list-group ">
+                    <li  class="list-group-item">
+                        <i class="fa fa-file-text-o"></i>
+                        <span id="type-gift">&nbsp;Comida</span>
+                    </li>
+                    <li class="list-group-item">
+                        <i class="fa fa-money"></i>
+                        <span id="gift-price">&nbsp;15.000</span>
+                    </li>
+                    <li class="list-group-item">
+                        <i class="fa fa-clock-o"></i>
+                        <span id="gift-time">&nbsp;36:45:10</span>
+                    </li>
+                </ul>
+                <ul class="list-group">
+                    <li class="list-group-item ">
+                        <strong>Descripcion</strong><br />
+                        <p id="gift-description">
+                            disfruta de un delicioso postre chessecake que te llenara el paladar de dulzura y sabor, de seguro te encantara y magnificara el placer cool
+                        </p>
+                    </li>
+                </ul>
+                <ul class="list-group">
+                    <li  class="list-group-item">
+                        ¿Que debes hacer para
+                        disfrutar tu regalo?
+                    </li>
+                </ul>
+                <ul class="list-group">
+                    <li id="action-name" class="list-group-item">
+                              Nombre de la accion
+                    </li>
+                </ul>
+            </div>
+            <!--<div class="col-lg-4 col-md-4 col-sm-6 cover-col">
+            <
+
+            <div class="cover-content">
+                <div class="cover-header">
+                    <img src="/www/images/gift.png">
+                    <div class="cover-title">
+                        <p>NUEVO REGALO</p>
+                        <span><i class="text-danger fa fa-map-marker"></i>STUDIO X</span>
+                    </div>
+                </div>
+                <div class="cover-body">
+                    <ul>
+                        <li><i class=" fa fa-money"></i>0</li>
+                        <li><i class=" fa fa-clock-o"></i>0</li>
+                        <li><i class="fa fa-car"></i>1113.87 mts</li>
+                    </ul>
+                </div>
+            </div>
+        </div>-->
+        </div>
+    </section>
+    <div class="i-popup-mask hidden"></div>
+    <div id="before-send-popup" class="i-popup-panel i-popup-primary hidden text-primary text-center">
+        <h4><i class="fa fa-spinner fa-pulse fa-5x"></i></h4>
+        <h5>Enviando, por favor espera...</h5>
+    </div>
+    <div id="error-popup" class="i-popup-panel i-popup-danger hidden text-justify">
+        <p>Lo siento, ha ocurrido un error(<span id="error-msg"></span>), intentalo nuevamente!</p>
+        <p>Si el error persiste puedes contactarnos a <span class="text-danger"><strong>soporte@megift.co</strong></span></p>
+        <button class="btn btn-danger btn-lg btn-block i-popup-close">Aceptar</button>
+    </div>
+    <div id="general-error-popup" class="i-popup-panel i-popup-danger hidden text-justify">
+        <p id="general-error-msg"></p>
+        <button class="btn btn-danger btn-lg btn-block i-popup-close">Aceptar</button>
+    </div>
+
+    <script src="intelxdk.js"></script>
+    <script src="cordova.js"></script>
+    <script src="xhr.js"></script>
+    <script src="https://rawgit.com/yonaxTics/inventor-js/master/public/javascripts/inventor-js/Inventor.min.js"></script>
+    <script src="https://rawgit.com/yonaxTics/inventor-js/master/public/javascripts/inventor-js/InventorMobile.min.js"></script>
+    <script>
+
+        var successResponse = "OK";
+        var host = window.localStorage.getItem('host');
+        var posId = window.localStorage.getItem('pos-id');
+        var giftId = window.localStorage.getItem('gift-id');
+        var beforeSendPopup = new Popup(document.getElementById('before-send-popup'));
+        var errorPopup = new Popup(document.getElementById('error-popup'));
+        var generalErrorPopup = new Popup(document.getElementById('general-error-popup'));
+
+        if (host === 'http://localhost:9000') {
+            init();
+        }
+
+        function init() {
+            loadGift();
+        }
+
+        function loadGift() {
+            var giftLoadXHR = new XHR('GET', host + '/loadGiftForMobile?idPOS=' + posId + '&idGift=' + giftId);
+            giftLoadXHR.setContentType('application/x-www-form-urlencoded;charset=UTF-8');
+            giftLoadXHR.onReady(function (xhr) {
+                try {
+                    var gift = JSON.parse(xhr.responseText);
+                    console.log(gift);
+                } catch (ex) {
+                    console.log(ex);
+                    document.getElementById('general-error-msg').textContent = xhr.responseText;
+                    generalErrorPopup.show();
+                }
+            });
+            giftLoadXHR.onError(function () {
+                document.getElementById('error-msg').textContent = xhr.statusText;
+                errorPopup.show();
+            });
+            giftLoadXHR.send();
+        }
+
+        //device ready
+        function onDeviceReady() {
+            init();
+        }
+        document.addEventListener("deviceready", onDeviceReady, false);
+
+    </script>
+</body>
+</html>

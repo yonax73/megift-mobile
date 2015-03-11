@@ -88,3 +88,18 @@
     background-color: #f6f6f6;
     padding: 0.5em;
 }
+
+/*detail gift*/
+.detail-gift .content-img {
+  height: 130px;
+    max-height: 130px;
+    max-width: 100%;
+    min-height: 130px;
+    min-width: 100%;
+    padding: 0;
+    width: 100%;
+}
+.detail-gift img{
+        height: 100%;
+    width: 100%;
+}
