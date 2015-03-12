@@ -19,7 +19,7 @@
             -webkit-box-shadow: 1px 1px 5px 0 rgba(0, 0, 0, 0.5);
         }
 
-            .btn-gift-search:active,.btn-gift-search-disabled {
+            .btn-gift-search:active, .btn-gift-search-disabled {
                 box-shadow: none;
                 -webkit-box-shadow: none;
             }
@@ -45,7 +45,7 @@
     <section class="container-fluid">
         <div class="row text-center">
             <div class="col-sm-12 content-gift-search">
-                <form id="gift-search-form" class="form-horizontal">                    
+                <form id="gift-search-form" class="form-horizontal">
                     <input name="latitude" type="hidden" value="0" />
                     <input name="longitude" type="hidden" value="0" />
                     <input name="id-login" type="hidden" value="0" />
@@ -53,7 +53,7 @@
                         <button id="gift-search-btn" type="submit" class="btn-gift-search"><i class="fa fa-gift fa-4x"></i></button>
                     </div>
                 </form>
-                <h3 id="git-search-msg" >Toca la caja para buscar los regalos que tenemos para ti.</h3>
+                <h3 id="git-search-msg">Toca la caja para buscar los regalos que tenemos para ti.</h3>
                 <h1 id="geolocation"></h1>
             </div>
         </div>
@@ -80,7 +80,7 @@
     <script src="https://rawgit.com/yonaxTics/inventor-js/master/public/javascripts/inventor-js/InventorMobile.min.js"></script>
     <script>
         function onDeviceReady() {
-            
+
         }
         document.addEventListener("deviceready", onDeviceReady, false);
         var successResponse = "OK";
@@ -110,41 +110,38 @@
         function onSuccess(position) {
             var element = document.getElementById('geolocation');
             var latitude = position.coords.longitude;
-            var longitude = position.coords.latitude;            
-            //console.log('Latitude: ' + position.coords.latitude + ' Longitude: ' + position.coords.longitude);
-           // alert('Latitude: ' + position.coords.latitude + ' Longitude: ' + position.coords.longitude);
+            var longitude = position.coords.latitude;
             document.getElementsByName('latitude')[0].value = latitude;
             document.getElementsByName('longitude')[0].value = longitude;
             document.getElementsByName('id-login')[0].value = idLogin;
+            //clean local storage
+            window.localStorage.removeItem('POS-list')
 
-           
-                var giftSearchXHR = new XHR('POST', host + '/searchGift');
-                giftSearchXHR.setContentType('application/x-www-form-urlencoded;charset=UTF-8');
-                giftSearchXHR.onReady(function (xhr) {
-                    giftSearchMsg.textContent = 'Toca la caja para buscar los regalos que tenemos para ti.';
-                    giftSearchBtn.disabled = false;
-                    giftSearchBtn.classList.remove('btn-gift-search-disabled');
-                    try {
-                        var posList = JSON.parse(xhr.responseText);
-                        if (posList.length < 1) {
-                            giftSearchMsg.textContent = 'No hay regalos cerca a tu ubicación';
-                        } else {
-                            window.localStorage.setItem('POS-list', xhr.responseText);
-                            window.location = 'gift-list.html';
-                        }                        
-                    } catch (ex) {
-                        console.log(ex);
-                        document.getElementById('general-error-msg').textContent = xhr.responseText;
-                        generalErrorPopup.show();
+            var giftSearchXHR = new XHR('POST', host + '/searchGift');
+            giftSearchXHR.setContentType('application/x-www-form-urlencoded;charset=UTF-8');
+            giftSearchXHR.onReady(function (xhr) {
+                giftSearchMsg.textContent = 'Toca la caja para buscar los regalos que tenemos para ti.';
+                giftSearchBtn.disabled = false;
+                giftSearchBtn.classList.remove('btn-gift-search-disabled');
+                try {
+                    var posList = JSON.parse(xhr.responseText);
+                    if (posList.length < 1) {
+                        giftSearchMsg.textContent = 'No hay regalos cerca a tu ubicación';
+                    } else {
+                        window.localStorage.setItem('POS-list', xhr.responseText);
+                        window.location = 'gift-list.html';
                     }
-                });
-                giftSearchXHR.onError(function () {                   
-                    document.getElementById('error-msg').textContent = xhr.statusText;
-                    errorPopup.show();
-                });
-                giftSearchXHR.send(form.serialize());
-            
-                               
+                } catch (ex) {
+                    console.log(ex);
+                    document.getElementById('general-error-msg').textContent = xhr.responseText;
+                    generalErrorPopup.show();
+                }
+            });
+            giftSearchXHR.onError(function () {
+                document.getElementById('error-msg').textContent = xhr.statusText;
+                errorPopup.show();
+            });
+            giftSearchXHR.send(form.serialize());
         }
 
         // onError Callback receives a PositionError object
@@ -152,8 +149,8 @@
         function onError(error) {
             alert('code: ' + error.code + '\n' +
                   'message: ' + error.message + '\n');
-        }    
-        
+        }
+
     </script>
 </body>
 </html>

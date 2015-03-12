@@ -58,8 +58,7 @@
         var beforeSendPopup = new Popup(document.getElementById('before-send-popup'));
         var errorPopup = new Popup(document.getElementById('error-popup'));
         var generalErrorPopup = new Popup(document.getElementById('general-error-popup'));
-        //clean local storage
-        window.localStorage.removeItem('POS-list')
+        
 
         loadGifts();
 
@@ -68,7 +67,7 @@
             var n = posList.length;
             for (var i = 0; i < n; i++) {
                 var pos = posList[i];
-                coverGift(element, pos.giftList, pos.name, pos.distanceInMetersStr,pos.id);
+                coverGift(element, pos.giftList, pos.name, pos.distanceFormatted, pos.id);
             }
         }
 
@@ -108,7 +107,7 @@
                     }
                 }
                 if (src == null) {
-                    src = '/www/images/gift.png';
+                    src = '../images/gift.png';
                 }
                 img.src = src;
                 header.appendChild(img);
@@ -146,7 +145,13 @@
                 //li
                 var li = document.createElement('li');
                 li.appendChild(icon);
-                li.appendChild(document.createTextNode(g.price));
+                var s = document.createElement('s');
+                s.textContent = g.priceFormatted;
+                li.appendChild(s);
+                var realPrice = document.createElement('span');
+                realPrice.classList.add('text-success');
+                realPrice.textContent = ' $' + 0;
+                li.appendChild(realPrice);
                 ul.appendChild(li);
                 //icon
                 icon = document.createElement('i');
@@ -162,8 +167,7 @@
                 //li
                 li = document.createElement('li');
                 li.appendChild(icon);
-                li.appendChild(document.createTextNode(posDistance));
-                // li.appendChild(document.createTextNode(g.status.value1));
+                li.appendChild(document.createTextNode(posDistance));                
                 ul.appendChild(li);
                 body.appendChild(ul);
 
