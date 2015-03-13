@@ -1,12 +1,12 @@
 {
   "project": {
-    "projectSettingsVersion": "1.2",
+    "projectSettingsVersion": "1.1",
     "creationData": {
       "type": "Demo",
       "projectTypeName": "com.intel.xdk.projecttype.jsapp",
       "src": "",
       "projectGuid": "94cb4b8b-f8c9-485a-a11d-a59a8f89b9de",
-      "lastModifiedDate": 1426283477640,
+      "lastModifiedDate": 1423754314123,
       "creationDate": 1423754314070
     },
     "XDK-app-designer": "false",
@@ -14,7 +14,22 @@
     "startFile": "index.html",
     "projectFiles": {},
     "projectDirectories": {},
-    "libraries": [],
+    "libraries": [
+      {
+        "name": "Cordova",
+        "version": "2.9.0",
+        "data": {
+          "default": true
+        }
+      },
+      {
+        "name": "intelXDK",
+        "version": "4.0.0",
+        "data": {
+          "default": true
+        }
+      }
+    ],
     "serviceMethods": [],
     "cordovaPluginsDirectory": "plugins",
     "cordovaPlugins": [],
@@ -31,16 +46,12 @@
         "isActive_": true,
         "appName_": "megift",
         "appID_": "xdk.intel.blank.template",
-        "appAccess_": [
-          {
-            "origin": "*"
-          }
-        ],
+        "appAccess_": "*",
         "icons_": [],
         "splashes_": [],
+        "iosProvs_": [],
         "addlPermissions_": "",
         "excludedLibraries_": "",
-        "iosProvs_": [],
         "cordovaCLIVersion_": "3.5",
         "crosswalkVersion_": "stable",
         "appVersion_": "0.0.1",
@@ -60,18 +71,14 @@
         "isActive_": true,
         "appName_": "megift",
         "appID_": "xdk.intel.blank.template",
-        "appAccess_": [
-          {
-            "origin": "*"
-          }
-        ],
+        "appAccess_": "*",
         "icons_": [],
         "splashes_": [],
+        "iosProvs_": [],
         "addlPermissions_": "",
         "excludedLibraries_": "",
-        "iosProvs_": [],
         "cordovaCLIVersion_": "3.5",
-        "crosswalkVersion_": "10",
+        "crosswalkVersion_": "stable",
         "appVersion_": "0.0.1",
         "appDescription_": "Use this template to start with a simple index.html file for creating mobile apps.",
         "appAuthor_": "",
@@ -88,16 +95,12 @@
         "isActive_": true,
         "appName_": "megift",
         "appID_": "xdk.intel.blank.template",
-        "appAccess_": [
-          {
-            "origin": "*"
-          }
-        ],
+        "appAccess_": "*",
         "icons_": [],
         "splashes_": [],
+        "iosProvs_": [],
         "addlPermissions_": "",
         "excludedLibraries_": "",
-        "iosProvs_": [],
         "cordovaCLIVersion_": "3.5",
         "crosswalkVersion_": "stable",
         "appVersion_": "0.0.1",
@@ -114,16 +117,31 @@
         "isActive_": true,
         "appName_": "megift",
         "appID_": "xdk.intel.blank.template",
-        "appAccess_": [
-          {
-            "origin": "*"
-          }
-        ],
+        "appAccess_": "*",
         "icons_": [],
         "splashes_": [],
+        "iosProvs_": [],
         "addlPermissions_": "",
         "excludedLibraries_": "",
+        "cordovaCLIVersion_": "3.5",
+        "crosswalkVersion_": "stable",
+        "appVersion_": "0.0.0.1",
+        "appDescription_": "Use this template to start with a simple index.html file for creating mobile apps."
+      },
+      "WindowsPhone8": {
+        "platform_": "wp8",
+        "runtime_": "Cordova 3.x",
+        "name_": "WindowsPhone8",
+        "preferences_": {},
+        "isActive_": true,
+        "appName_": "megift",
+        "appID_": "xdk.intel.blank.template",
+        "appAccess_": "*",
+        "icons_": [],
+        "splashes_": [],
         "iosProvs_": [],
+        "addlPermissions_": "",
+        "excludedLibraries_": "",
         "cordovaCLIVersion_": "3.5",
         "crosswalkVersion_": "stable",
         "appVersion_": "0.0.0.1",

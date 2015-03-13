@@ -4,11 +4,13 @@
     <title>Megift App Sign up</title>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="https://rawgit.com/yonaxTics/inventor-js/master/public/stylesheets/inventor/megift/megift.min.css">
+    <link href="../../css/font-awesome/css/font-awesome.min.css" rel="stylesheet" media="screen">
+    <link href="../../css/inventor/megift.min.css" rel="stylesheet" media="screen">
+    <link href="../../css/inventor/animations.min.css" rel="stylesheet" media="screen">
+    <link href="../../css/app.min.css" rel="stylesheet" media="screen" />
 
 </head>
-<body>
+<body class="i-ease-in i-1s i-fade-in">
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -81,9 +83,9 @@
         <h4><i class=" fa fa-spinner fa-pulse fa-5x"></i></h4>
         <h5>Enviando, por favor espera...</h5>
     </div>
-    <div id="error-popup" class="i-popup-panel i-popup-danger hidden text-justify">        
-        <p >Lo siento, ha ocurrido un error(<span id="error-msg"></span>), intentalo nuevamente!</p>
-        <p>Si el error persiste puedes contactarnos a <span class="text-danger"><strong>soporte@megift.co</strong></span></p>       
+    <div id="error-popup" class="i-popup-panel i-popup-danger hidden text-justify">
+        <p>Lo siento, ha ocurrido un error(<span id="error-msg"></span>), intentalo nuevamente!</p>
+        <p>Si el error persiste puedes contactarnos a <span class="text-danger"><strong>soporte@megift.co</strong></span></p>
         <button class="btn btn-danger btn-lg btn-block i-popup-close">Aceptar</button>
     </div>
     <div id="general-error-popup" class="i-popup-panel i-popup-danger hidden text-justify">
@@ -91,16 +93,16 @@
         <button class="btn btn-danger btn-lg btn-block i-popup-close">Aceptar</button>
     </div>
     <div id="success-popup" class="i-popup-panel i-popup-success hidden text-justify">
-         <h3>Bienvenido</h3>
-         <h4>Tu cuenta ha sido creada con exito</h4>
-        <a href="../../social/sendInvitationsControl.html" rel="external" class="btn btn-success btn-lg btn-block">Aceptar</a>        
+        <h3>Bienvenido</h3>
+        <h4>Tu cuenta ha sido creada con exito</h4>
+        <a href="../../social/sendInvitationsControl.html" rel="external" class="btn btn-success btn-lg btn-block">Aceptar</a>
     </div>
 
-    <script src="intelxdk.js"></script>
-    <script src="cordova.js"></script>
-    <script src="xhr.js"></script>
-    <script src="https://rawgit.com/yonaxTics/inventor-js/master/public/javascripts/inventor-js/Inventor.min.js"></script>
-    <script src="https://rawgit.com/yonaxTics/inventor-js/master/public/javascripts/inventor-js/InventorMobile.min.js"></script>
+    <script src="../../intelxdk.js"></script>
+    <script src="../../cordova.js"></script>
+    <script src="../../xhr.js"></script>
+    <script src="../../js/inventor/Inventor.min.js"></script>
+    <script src="../../js/inventor/InventorMobile.min.js"></script>
     <script>
         function onDeviceReady() {
         }
@@ -111,21 +113,23 @@
         var beforeSendPopup = new Popup(document.getElementById('before-send-popup'));
         var errorPopup = new Popup(document.getElementById('error-popup'));
         var successPopup = new Popup(document.getElementById('success-popup'));
-        var generalErrorPopup = new Popup(document.getElementById('general-error-popup'));         
+        var generalErrorPopup = new Popup(document.getElementById('general-error-popup'));
         var form = new Form(document.getElementById('signup-form'));
         //signup form
         form.onsubmit(function () {
-            if (form.isValid()) {               
+            if (form.isValid()) {
                 XHR.byPost(form.serialize(), host + '/createAccount', function () {
                     beforeSendPopup.show();
                 }, function (xhr) {
-                    beforeSendPopup.close();                  
+                    beforeSendPopup.close();
                     var response = xhr.responseText;
-                    if (response === successResponse) {
+                    if (response > 0) {
                         var partner = {};
                         partner.name = document.getElementById('name-partner').value;
                         partner.email = document.getElementById('email-partner').value;
+                        window.localStorage.setItem('id-login', response);
                         window.localStorage.setItem('partner', JSON.stringify(partner));
+                        window.localStorage.setItem('show-menu',false);
                         successPopup.show();
                     } else {
                         document.getElementById('general-error-msg').textContent = response;
@@ -136,9 +140,10 @@
                     document.getElementById('error-msg').textContent = xhr.statusText;
                     errorPopup.show();
                 });
-            } 
+            }
         });
 
     </script>
 </body>
+
 </html>

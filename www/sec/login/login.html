@@ -4,10 +4,11 @@
     <title>Megift App Login</title>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="https://rawgit.com/yonaxTics/inventor-js/master/public/stylesheets/inventor/megift/megift.min.css">
-    <link rel="stylesheet" type="text/css" href="../../css/app.css">
-    
+    <link href="../../css/font-awesome/css/font-awesome.min.css" rel="stylesheet" media="screen">
+    <link href="../../css/inventor/megift.min.css" rel="stylesheet" media="screen">
+    <link href="../../css/inventor/animations.min.css" rel="stylesheet" media="screen">
+    <link href="../../css/app.min.css" rel="stylesheet" media="screen" />
+
 </head>
 <body class="bg i-ease-in i-1s i-fade-in">
     <section class="container-fluid">
@@ -67,22 +68,30 @@
         <button class="btn btn-danger btn-lg btn-block i-popup-close">Aceptar</button>
     </div>
 
-    <script src="intelxdk.js"></script>
-    <script src="cordova.js"></script>
-    <script src="xhr.js"></script>
-    <script src="https://rawgit.com/yonaxTics/inventor-js/master/public/javascripts/inventor-js/Inventor.min.js"></script>
-    <script src="https://rawgit.com/yonaxTics/inventor-js/master/public/javascripts/inventor-js/InventorMobile.min.js"></script>
+    <script src="../../intelxdk.js"></script>
+    <script src="../../cordova.js"></script>
+    <script src="../../xhr.js"></script>
+    <script src="../../js/inventor/Inventor.min.js"></script>
+    <script src="../../js/inventor/InventorMobile.min.js"></script>
     <script>
-        function onDeviceReady() {
-        }
-        document.addEventListener("deviceready", onDeviceReady, false);
+        var localHost = 'http://localhost:9000';
         var successResponse = "OK";
         var host = window.localStorage.getItem('host');
         var form = new Form(document.getElementById('login-form'));
         var beforeSendPopup = new Popup(document.getElementById('before-send-popup'));
         var errorPopup = new Popup(document.getElementById('error-popup'));
         var generalErrorPopup = new Popup(document.getElementById('general-error-popup'));
-
+        //device ready
+        function onDeviceReady() {
+            init();
+        }
+        document.addEventListener("deviceready", onDeviceReady, false);
+        // for local work in web broswers
+        if (host === localHost) {
+            init();
+        }
+        //delclre init
+        function init() {}
         //login form
         form.onsubmit(function () {
             if (form.isValid()) {
@@ -92,9 +101,8 @@
                     beforeSendPopup.close();
                     var response = xhr.responseText;
                     if (response > 0) {
-                        window.localStorage.setItem('id-login', response);
-                        window.location = '../../gift/search-gift.html';
-                        //window.location = '../../bsp/partner/partner.html';                       
+                        window.localStorage.setItem('id-login', response);                       
+                        window.location = '../../bsp/gift/search-gift.html';
                     } else {
                         document.getElementById('general-error-msg').textContent = response;
                         generalErrorPopup.show();

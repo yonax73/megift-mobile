@@ -4,24 +4,11 @@
     <title>Megift App</title>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <link rel="stylesheet" type="text/css" href="https://rawgit.com/yonaxTics/inventor-js/master/public/stylesheets/inventor/megift/megift.min.css">
-    <link rel="stylesheet" type="text/css" href="css/app.css">
-    <style type="text/css">
-        .welcome {
-            color: #fff;
-        }
+    <link href="css/inventor/animations.min.css" rel="stylesheet" media="screen">
+    <link rel="stylesheet" type="text/css" href="css/app.min.css">
 
-        .start-session {
-            padding-top: 15px;
-            padding-bottom: 10px;
-        }
-
-            .start-session a {
-                margin-top: 5px;
-            }
-    </style>
 </head>
-<body class="bg">
+<body class="i-ease-in i-1s i-fade-in bg">
     <section class="container-fluid">
         <div class="row">
             <div class="col-sm-12">
@@ -33,37 +20,36 @@
     <script src="cordova.js"></script>
     <script src="xhr.js"></script>
     <script>
-    var localHost = 'http://localhost:9000';
-    var productionHost = 'http://megift.co';
-    var host = localHost;
-    function onDeviceReady() {
-        if (navigator.splashscreen && navigator.splashscreen.hide) {
-            navigator.splashscreen.hide();
+        var localHost = 'http://localhost:9000';
+        var productionHost = 'http://megift.co';
+        var host = localHost;
+        function onDeviceReady() {
+            if (navigator.splashscreen && navigator.splashscreen.hide) {
+                navigator.splashscreen.hide();
+            }
+            if (window.intel && intel.xdk && intel.xdk.device) {
+                if (intel.xdk.device.hideSplashScreen)
+                    intel.xdk.device.hideSplashScreen();
+            }
+            startApp();
         }
-        if (window.intel && intel.xdk && intel.xdk.device) {
-            if (intel.xdk.device.hideSplashScreen)
-                intel.xdk.device.hideSplashScreen();
+        // for local work in web broswers
+        if (host === localHost) {            
+            startApp();
         }
-        startApp();
-    }
-    // for local work in web broswers
-    if (host === localHost) {
-        startApp();
-    }
-    function startApp() {
-        window.localStorage.setItem('host',host);
-        var userId = window.localStorage.getItem("user-id");
-        var userIsRegister = window.localStorage.getItem("user-is-register");
-        if (userId != null && userId > 0) {
-
-        } else if (userIsRegister != null && userIsRegister > 0) {
-            window.location = "sec/login/login.html";
-        } else {
-            window.location = "sec/login/signup.html";
-            //window.location = "gift/search-gift.html";
+        function startApp() {
+            window.localStorage.setItem('host', host);
+            var userId = window.localStorage.getItem("login-id");
+            var userIsRegister = window.localStorage.getItem("user-is-register");
+            if (userId != null && userId > 0) {
+                window.location = 'bsp/gift/search-gift.html';
+            } else if (userIsRegister != null && userIsRegister > 0) {
+                window.location = "sec/login/login.html";
+            } else {
+                window.location = "sec/login/signup.html";               
+            }
         }
-    }
-    document.addEventListener("deviceready", onDeviceReady, false);
+        document.addEventListener("deviceready", onDeviceReady, false);
     </script>
 </body>
 </html>

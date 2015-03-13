@@ -4,95 +4,89 @@
     <title>Megift App Invite friends</title>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="https://rawgit.com/yonaxTics/inventor-js/master/public/stylesheets/inventor/megift/megift.min.css">
-    <link rel="stylesheet" type="text/css" href="../../css/app.css">
-    <style>
-        .circle {
-            text-align: center;
-        }
-
-            .circle a {
-                border-radius: 60px;
-                color: #fff;
-                display: inline-block;
-                font-size: 16px;
-                height: 65px;
-                margin-right: 10%;
-                margin-top: 5px;
-                padding-top: 20px;
-                text-align: center;
-                width: 65px;
-            }
-
-                .circle a:hover {
-                    color: #fff;
-                }
-
-                .circle a.gmail {
-                    background-color: #eb4646;
-                }
-
-                .circle a.outlook {
-                    background-color: #0072c6;
-                }
-
-                .circle a.yahoo {
-                    background-color: #500095;
-                }
-    </style>
+    <link href="../css/font-awesome/css/font-awesome.min.css" rel="stylesheet" media="screen">
+    <link href="../css/inventor/megift.min.css" rel="stylesheet" media="screen">
+    <link href="../css/inventor/animations.min.css" rel="stylesheet" media="screen">
+    <link href="../css/app.min.css" rel="stylesheet" media="screen" />
 </head>
-<body>
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <span class="navbar-brand ">
-                    <img src="../../../icon.png">
-                </span>
-                <p class="navbar-text">Invitar amigos.</p>
+<body class="i-ease-in i-1s i-fade-in">
+    <div class="content-main">
+        <div id="nav-app" class="nav-app  hidden ">
+            <div class="list-group">
+                <a class="list-group-item list-group-item active" href="../bsp/partner/partner.html" rel="external">
+                    <i class="fa fa-user fa-fw fa-2x"></i>&nbsp; Mi Perfil
+                </a>
+                <a class="list-group-item list-group-item active" href="../bsp/gift/search-gift.html" rel="external">
+                    <i class="fa fa-gift fa-fw fa-2x"></i>&nbsp; Buscar regalos
+                </a>
+                <a class="list-group-item list-group-item active" href="#" onclick="toggleNav()">
+                    <i class="fa fa-share-alt fa-fw fa-2x"></i>&nbsp; Invitar amigos
+                </a>
+                <a class="list-group-item list-group-item active" href="../sec/settings/settings.html" rel="external">
+                    <i class="fa fa-wrench fa-fw fa-2x"></i>&nbsp; Ajustes
+                </a>
+                <a class="list-group-item list-group-item active" href="../sec/login/help.html" rel="external">
+                    <i class="fa fa-info-circle fa-fw fa-2x"></i>&nbsp; Ayuda
+                </a>
+                <a class="list-group-item list-group-item active" href="#" onclick="singOut()">
+                    <i class="fa fa-sign-out fa-fw fa-2x"></i>&nbsp; Cerrar sesión
+                </a>
             </div>
         </div>
-    </nav>
-    <section class="container-fluid">
-        <div class="row">
-            <div class="col-sm-12">
-                <h3>Cuentale a dos amigos</h3>
-                <form id="invite-friends-form" class="form-horizontal">
-                    <div class="form-group has-feedback">
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control input-lg" name="email-friend-1" data-email="true" placeholder="Correo Electrónico">
-                            <span class="form-control-feedback"></span>
-                            <small class="i-form-error-msg text-danger hidden">Ingrese un correo electrónico válido</small>
-                        </div>
+        <div class="content-app">
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <div class="navbar-header" onclick="toggleNav()">
+                        <span class="navbar-brand">
+                            <i class="fa fa-bars"></i>
+                        </span>
+                        <p class="navbar-text">Invitar amigos</p>
                     </div>
-                    <div class="form-group has-feedback">
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control input-lg" name="email-friend-2" data-email="true" placeholder="Correo Electrónico">
-                            <span class="form-control-feedback"></span>
-                            <small class="i-form-error-msg text-danger hidden">Ingrese un correo electrónico válido</small>
-                        </div>
-                    </div>
-                    <input type="hidden" name="name-partner" id="name-partner" />
-                    <input type="hidden" name="email-partner" id="email-partner" />
-                    <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
-                            <button type="submit" class="btn btn-success btn-lg btn-block">Enviar mensaje</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-12">
-                <h4>Ó cuentale a tus amigos de:</h4>
-                <div class="circle">
-                    <a class="gmail" href="oAuth?id=google">Gmail</a>
-                    <a class="outlook" href="oAuth?id=hotmail">Outlook</a>
-                    <a class="yahoo" href="oAuth?id=yahoo">Yahoo</a>
                 </div>
-            </div>
+            </nav>
+            <section class="container-fluid" onclick="hiddenNav()">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h3>Cuentale a dos amigos</h3>
+                        <form id="invite-friends-form" class="form-horizontal">
+                            <div class="form-group has-feedback">
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control input-lg" name="email-friend-1" data-email="true" placeholder="Correo Electrónico">
+                                    <span class="form-control-feedback"></span>
+                                    <small class="i-form-error-msg text-danger hidden">Ingrese un correo electrónico válido</small>
+                                </div>
+                            </div>
+                            <div class="form-group has-feedback">
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control input-lg" name="email-friend-2" data-email="true" placeholder="Correo Electrónico">
+                                    <span class="form-control-feedback"></span>
+                                    <small class="i-form-error-msg text-danger hidden">Ingrese un correo electrónico válido</small>
+                                </div>
+                            </div>
+                            <input type="hidden" name="name-partner" id="name-partner" />
+                            <input type="hidden" name="email-partner" id="email-partner" />
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button type="submit" class="btn btn-success btn-lg btn-block">Enviar mensaje</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h4>Ó cuentale a tus amigos de:</h4>
+                        <div class="circle">
+                            <a class="gmail" href="oAuth?id=google">Gmail</a>
+                            <a class="outlook" href="oAuth?id=hotmail">Outlook</a>
+                            <a class="yahoo" href="oAuth?id=yahoo">Yahoo</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
-    </section>
+    </div>
+
     <div class="i-popup-mask hidden"></div>
     <div id="success-popup" class="i-popup-panel i-popup-primary hidden">
         <h5>
@@ -100,7 +94,7 @@
             Gracias por darnos la oportunidad de hacer a tus amigos felices.
         </h5>
         <br />
-        <a href="../gift/search-gift.html" rel="external" class="btn btn-primary btn-lg btn-block">Buscar regalos</a>
+        <a href="../sec/settings/tutorial.html" rel="external" class="btn btn-primary btn-lg btn-block">Buscar regalos</a>
     </div>
     <div id="before-send-popup" class="i-popup-panel i-popup-primary hidden text-primary text-center">
         <h4><i class="fa fa-spinner fa-pulse fa-5x"></i></h4>
@@ -115,23 +109,36 @@
         <p id="general-error-msg"></p>
         <button class="btn btn-danger btn-lg btn-block i-popup-close">Aceptar</button>
     </div>
-    <script src="intelxdk.js"></script>
-    <script src="cordova.js"></script>
-    <script src="xhr.js"></script>
-    <script src="https://rawgit.com/yonaxTics/inventor-js/master/public/javascripts/inventor-js/Inventor.min.js"></script>
-    <script src="https://rawgit.com/yonaxTics/inventor-js/master/public/javascripts/inventor-js/InventorMobile.min.js"></script>
+    <script src="../intelxdk.js"></script>
+    <script src="../cordova.js"></script>
+    <script src="../xhr.js"></script>
+    <script src="../js/inventor/Inventor.min.js"></script>
+    <script src="../js/inventor/InventorMobile.min.js"></script>
     <script>
-        function onDeviceReady() {
-        }
-        document.addEventListener("deviceready", onDeviceReady, false);
+
         //atributes
+        var localHost = 'http://localhost:9000';
         var inviteFriendsForm = new Form(document.getElementById('invite-friends-form'));
-        var successPopup = new Popup(document.getElementById('success-popup'));      
+        var successPopup = new Popup(document.getElementById('success-popup'));
         var beforeSendPopup = new Popup(document.getElementById('before-send-popup'));
-        var errorPopup = new Popup(document.getElementById('error-popup'));       
+        var errorPopup = new Popup(document.getElementById('error-popup'));
         var generalErrorPopup = new Popup(document.getElementById('general-error-popup'));
         var host = window.localStorage.getItem('host');
         var successResponse = "OK";
+
+        //device onready
+        function onDeviceReady() {
+            init();
+        }
+        document.addEventListener("deviceready", onDeviceReady, false);
+        // for local work in web broswers
+        if (host === localHost) {
+            init();
+        }
+        //declare init
+        function init() {
+            initNav();
+        }
         //invite friends
         inviteFriendsForm.onsubmit(function () {
             if (inviteFriendsForm.isValid()) {
@@ -161,7 +168,32 @@
                 inviteFriendsXHR.send(inviteFriendsForm.serialize());
             }
         });
+        //nav
+        function initNav() {
+            document.getElementById('nav-app').style.height = Utils.getWindowMaxHeight() + 'px';
+        }
+
+        function toggleNav() {
+            var nav = document.getElementById('nav-app');
+            nav.classList.toggle('hidden');
+        }
+        function hiddenNav() {
+            var nav = document.getElementById('nav-app');
+            if (!nav.classList.contains('hidden')) {
+                nav.classList.add('hidden');
+            }
+        }
+        function singOut() {
+            window.localStorage.clear();
+            window.localStorage.setItem("user-is-register", 1);
+            window.location = '../index.html';
+        }
+
+
+
+
 
     </script>
 </body>
+
 </html>

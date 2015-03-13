@@ -1,30 +1,55 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title>Megift App Gifts</title>
+    <title>Megift App Gift Results Search</title>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href="../css/app.css" rel="stylesheet" />
-    <link rel="stylesheet" type="text/css" href="https://rawgit.com/yonaxTics/inventor-js/master/public/stylesheets/inventor/megift/megift.min.css">
+    <link href="../../css/font-awesome/css/font-awesome.min.css" rel="stylesheet" media="screen">
+    <link href="../../css/inventor/megift.min.css" rel="stylesheet" media="screen">
+    <link href="../../css/inventor/animations.min.css" rel="stylesheet" media="screen">
+    <link href="../../css/app.min.css" rel="stylesheet" media="screen" />
 </head>
 
 <body class="i-ease-in i-1s i-fade-in">
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <span class="navbar-brand ">
-                    <img src="../../icon.png" alt="Megift" />
-                </span>
-                <p class="navbar-text">Regalos para disfrutar</p>
+    <div class="content-main">
+        <div id="nav-app" class="nav-app  hidden ">
+            <div class="list-group">
+                <a class="list-group-item list-group-item active" href="../partner/partner.html" rel="external">
+                    <i class="fa fa-user fa-fw fa-2x"></i>&nbsp; Mi Perfil
+                </a>
+                <a class="list-group-item list-group-item active" href="search-gift.html" rel="external">
+                    <i class="fa fa-gift fa-fw fa-2x"></i>&nbsp; Buscar regalos
+                </a>
+                <a class="list-group-item list-group-item active" href="../../social/inviteFriends.html" rel="external">
+                    <i class="fa fa-share-alt fa-fw fa-2x"></i>&nbsp; Invitar amigos
+                </a>
+                <a class="list-group-item list-group-item active" href="../../sec/settings/settings.html" rel="external">
+                    <i class="fa fa-wrench fa-fw fa-2x"></i>&nbsp; Ajustes
+                </a>
+                <a class="list-group-item list-group-item active" href="../../sec/login/help.html" rel="external">
+                    <i class="fa fa-info-circle fa-fw fa-2x"></i>&nbsp; Ayuda
+                </a>
+                <a class="list-group-item list-group-item active" href="#" onclick="singOut()">
+                    <i class="fa fa-sign-out fa-fw fa-2x"></i>&nbsp; Cerrar sesión
+                </a>
             </div>
         </div>
-    </nav>
-    <section class="container-fluid">
-        <div id="cover-gift" class="row text-center">
-
+        <div class="content-app">
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <div class="navbar-header" onclick="toggleNav()">
+                        <span class="navbar-brand">
+                            <i class="fa fa-bars"></i>
+                        </span>
+                        <p class="navbar-text">Regalos para disfrutar</p>
+                    </div>
+                </div>
+            </nav>
+            <section class="container-fluid" onclick="hiddenNav()">
+                <div id="cover-gift" class="row text-center"></div>
+            </section>
         </div>
-    </section>
+    </div>
     <div class="i-popup-mask hidden"></div>
     <div id="before-send-popup" class="i-popup-panel i-popup-primary hidden text-primary text-center">
         <h4><i class="fa fa-spinner fa-pulse fa-5x"></i></h4>
@@ -40,28 +65,54 @@
         <button class="btn btn-danger btn-lg btn-block i-popup-close">Aceptar</button>
     </div>
 
-    <script src="intelxdk.js"></script>
-    <script src="cordova.js"></script>
-    <script src="xhr.js"></script>
-    <script src="https://rawgit.com/yonaxTics/inventor-js/master/public/javascripts/inventor-js/Inventor.min.js"></script>
-    <script src="https://rawgit.com/yonaxTics/inventor-js/master/public/javascripts/inventor-js/InventorMobile.min.js"></script>
+    <script src="../../intelxdk.js"></script>
+    <script src="../../cordova.js"></script>
+    <script src="../../xhr.js"></script>
+    <script src="../../js/inventor/Inventor.min.js"></script>
+    <script src="../../js/inventor/InventorMobile.min.js"></script>
     <script>
-        function onDeviceReady() {
-
-        }
-        document.addEventListener("deviceready", onDeviceReady, false);
-
         var successResponse = "OK";
+        var localHost = 'http://localhost:9000';
         var host = window.localStorage.getItem('host');
         var idLogin = window.localStorage.getItem('id-login');
         var posList = JSON.parse(window.localStorage.getItem('POS-list'));
         var beforeSendPopup = new Popup(document.getElementById('before-send-popup'));
         var errorPopup = new Popup(document.getElementById('error-popup'));
         var generalErrorPopup = new Popup(document.getElementById('general-error-popup'));
-        
-
-        loadGifts();
-
+        //device onready
+        function onDeviceReady() {
+            init();
+        }
+        document.addEventListener("deviceready", onDeviceReady, false);
+        // for local work in web broswers
+        if (host === localHost) {
+            init();
+        }
+        //declare init
+        function init() {
+            initNav();
+            loadGifts();
+        }
+        //nav
+        function initNav() {
+            document.getElementById('nav-app').style.height = Utils.getWindowMaxHeight() + 'px';
+        }
+        function toggleNav() {
+            var nav = document.getElementById('nav-app');
+            nav.classList.toggle('hidden');
+        }
+        function hiddenNav() {
+            var nav = document.getElementById('nav-app');
+            if (!nav.classList.contains('hidden')) {
+                nav.classList.add('hidden');
+            }
+        }
+        function singOut() {
+            window.localStorage.clear();
+            window.localStorage.setItem("user-is-register",1);
+            window.location = '../../index.html';
+        }
+        //load gift
         function loadGifts() {
             var element = document.getElementById('cover-gift');
             var n = posList.length;
@@ -70,9 +121,8 @@
                 coverGift(element, pos.giftList, pos.name, pos.distanceFormatted, pos.id);
             }
         }
-
         // Cover Gifts
-        function coverGift(element, gift, posName, posDistance,posId) {
+        function coverGift(element, gift, posName, posDistance, posId) {
             var n = gift.length;
             for (var i = 0; i < n; i++) {
                 var g = gift[i];
@@ -90,34 +140,15 @@
                 header.classList.add('cover-header');
                 //img
                 var img = document.createElement('img');
-                var src = null;
-                if (g.pictures != null) {
-                    var m = g.pictures.length;
-                    if (m > 0) {
-                        var j = 0;
-                        var found = false;
-                        do {
-                            var pic = g.pictures[j];
-                            if (pic.main) {
-                                src = pic.dataURI;
-                                found = true;
-                            }
-                            j++;
-                        } while (!found || j < m);
-                    }
-                }
-                if (src == null) {
-                    src = '../images/gift.png';
-                }
-                img.src = src;
+                img.src = g.mainPicture ? g.mainPicture.dataURI : '../images/gift.png';
                 header.appendChild(img);
                 header.dataset.posId = posId;
-                header.dataset.giftId =g.id;
+                header.dataset.giftId = g.id;
                 //event header
                 header.onclick = function () {
                     window.localStorage.setItem('pos-id', this.dataset.posId);
                     window.localStorage.setItem('gift-id', this.dataset.giftId);
-                    window.location = 'gift.html';                    
+                    window.location = 'gift.html';
                 }
                 //title
                 var title = document.createElement('div');
@@ -159,7 +190,7 @@
                 //li
                 li = document.createElement('li');
                 li.appendChild(icon);
-                li.appendChild(document.createTextNode(g.expirationTime));
+                li.appendChild(document.createTextNode(g.elapseTime));
                 ul.appendChild(li);
                 //icon
                 icon = document.createElement('i');
@@ -167,7 +198,7 @@
                 //li
                 li = document.createElement('li');
                 li.appendChild(icon);
-                li.appendChild(document.createTextNode(posDistance));                
+                li.appendChild(document.createTextNode(posDistance));
                 ul.appendChild(li);
                 body.appendChild(ul);
 
