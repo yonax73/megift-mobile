@@ -195,9 +195,11 @@
         }
         document.addEventListener("deviceready", onDeviceReady, false);
         // for local work in web broswers
-        if (host === localHost) {
+        //not working on device test app
+        /*if (host === localHost) {
             init();
-        }
+        }*/
+        init();
         //function init
         function init() {
             initNav();

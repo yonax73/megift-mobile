@@ -22,7 +22,7 @@
     <script>
         var localHost = 'http://localhost:9000';
         var productionHost = 'http://megift.co';
-        var host = localHost;
+        var host = productionHost;
         function onDeviceReady() {
             if (navigator.splashscreen && navigator.splashscreen.hide) {
                 navigator.splashscreen.hide();
@@ -34,9 +34,11 @@
             startApp();
         }
         // for local work in web broswers
-        if (host === localHost) {            
+        //not run in device
+        /*if (host === localHost) {            
             startApp();
-        }
+        }*/
+        startApp();
         function startApp() {
             window.localStorage.setItem('host', host);
             var userId = window.localStorage.getItem("login-id");
