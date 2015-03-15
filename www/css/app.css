@@ -234,9 +234,47 @@
         margin-top: 5px;
     }
 /*tutorial*/
-.gift-tutorial{
-     background-color: rgba(0, 0, 0, 0.5);
+.gift-tutorial {
     height: 100%;
     position: absolute;
     width: 100%;
 }
+
+    .gift-tutorial > div {
+        bottom: 0;
+        display: table;
+        position: absolute;
+        text-align: center;
+        width: 100%;
+    }
+
+    .gift-tutorial button {
+        background-color: #fff;
+        border: 1px solid #de5619;
+        border-radius: 32px;
+        color: #de5619;
+        font-family: "Comic Sans MS";
+        font-size: 120%;
+        font-weight: bold;
+        height: 48px;
+        margin-right: 0.5em;
+        width: 48px;
+    }
+
+        .gift-tutorial button.active {
+            background-color: #de5619;
+            color: #fff;
+        }
+
+    .gift-tutorial a {
+        font-weight: bold;
+        font-family: 'Comic Sans MS';
+        color: #fff;
+    }
+
+    .gift-tutorial + img {
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+        width: 100vw;
+    }
